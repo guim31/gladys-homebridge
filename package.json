@@ -1,8 +1,8 @@
 {
-  "name": "gladys-integration-template-js",
+  "name": "gladys-homebridge",
   "version": "1.0.0",
   "private": true,
-  "description": "Official starter template to build an external integration for Gladys Assistant with the JavaScript SDK.",
+  "description": "Gladys Assistant external integration bridging Homebridge: import the accessories of every Homebridge plugin into Gladys and control them through the Homebridge UI.",
   "type": "module",
   "main": "index.js",
   "scripts": {

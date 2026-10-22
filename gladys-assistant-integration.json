@@ -1,177 +1,679 @@
 {
   "manifest_version": 1,
   "type": "device",
-  "name": "Demo Devices Template",
+  "name": "Homebridge",
   "description": {
-    "en": "Starter template showing sensors, a switch, a dimmable light and a smart plug.",
-    "fr": "Template de démarrage : capteurs, interrupteur, lampe variable et prise connectée."
+    "en": "Bridge to Homebridge: its accessories (plugs, lights, sensors, blinds…) in Gladys, with control.",
+    "fr": "Pont vers Homebridge : ses accessoires (prises, lampes, capteurs, volets…) dans Gladys, pilotables.",
+    "de": "Brücke zu Homebridge: Zubehör (Steckdosen, Lampen, Sensoren, Rollos…) in Gladys, steuerbar.",
+    "es": "Puente a Homebridge: sus accesorios (enchufes, luces, sensores, persianas…) en Gladys, controlables."
   },
   "version": "1.0.0",
-  "docker_image": "ghcr.io/gladysassistant/integration-template-js:1.0.0",
+  "docker_image": "ghcr.io/guim31/gladys-homebridge:1.0.0",
   "gladys_version": ">=5.1.0",
-  "cover_image": "https://raw.githubusercontent.com/GladysAssistant/integration-template-js/master/cover.png",
-  "categories": ["lighting", "security", "environment"],
-  "transports": ["local", "cloud"],
+  "cover_image": "https://raw.githubusercontent.com/guim31/gladys-homebridge/main/cover.png",
+  "categories": ["protocols", "lighting", "climate"],
+  "transports": ["local"],
   "config_schema": [
     {
       "key": "intro",
       "type": "section",
-      "label": { "en": "Getting started", "fr": "Pour commencer" },
+      "label": {
+        "en": "Your Homebridge accessories in Gladys",
+        "fr": "Vos accessoires Homebridge dans Gladys",
+        "de": "Dein Homebridge-Zubehör in Gladys",
+        "es": "Sus accesorios de Homebridge en Gladys"
+      },
       "description": {
-        "en": "The demo weather station reads real data from the free Open-Meteo API: pick the coordinates to observe. No account, no API key.",
-        "fr": "La station météo de démonstration lit de vraies données via l'API gratuite Open-Meteo : choisissez les coordonnées à observer. Pas de compte, pas de clé d'API."
+        "en": "Gladys reads the accessories of every Homebridge plugin through the Homebridge UI and follows their changes live. Homebridge must run in insecure mode (Homebridge settings), as for the Accessories page of the UI. Create a dedicated user in the UI, without two-factor authentication. The accessories then show up in the Discovery tab: add the ones you want.",
+        "fr": "Gladys lit les accessoires de tous les plugins Homebridge par l'interface Homebridge et suit leurs changements en direct. Homebridge doit tourner en mode insecure (réglages de Homebridge), comme pour la page Accessoires de l'interface. Créez un utilisateur dédié dans l'interface, sans double authentification. Les accessoires apparaissent ensuite dans l'onglet Découverte : ajoutez ceux que vous voulez.",
+        "de": "Gladys liest das Zubehör aller Homebridge-Plugins über die Homebridge-Oberfläche und verfolgt seine Änderungen live. Homebridge muss im Insecure-Modus laufen (Homebridge-Einstellungen), wie für die Zubehör-Seite der Oberfläche. Lege dort einen eigenen Benutzer ohne Zwei-Faktor-Authentifizierung an. Das Zubehör erscheint dann im Reiter Entdecken: Füge das gewünschte hinzu.",
+        "es": "Gladys lee los accesorios de todos los plugins de Homebridge mediante la interfaz de Homebridge y sigue sus cambios en directo. Homebridge debe funcionar en modo insecure (ajustes de Homebridge), como para la página Accesorios de la interfaz. Cree un usuario dedicado en la interfaz, sin autenticación de dos factores. Los accesorios aparecen luego en la pestaña Descubrir: añada los que quiera."
       },
       "links": [
         {
-          "url": "https://open-meteo.com/en/docs",
-          "label": { "en": "Open-Meteo documentation", "fr": "Documentation Open-Meteo" }
+          "url": "https://github.com/homebridge/homebridge-config-ui-x/wiki/Enabling-Accessory-Control",
+          "label": {
+            "en": "Enabling accessory control",
+            "fr": "Activer le contrôle des accessoires",
+            "de": "Zubehörsteuerung aktivieren",
+            "es": "Activar el control de accesorios"
+          }
         }
       ]
     },
     {
-      "key": "latitude",
-      "type": "number",
-      "label": { "en": "Latitude", "fr": "Latitude" },
-      "description": {
-        "en": "Latitude used for the demo weather sensor.",
-        "fr": "Latitude utilisée par le capteur météo de démonstration."
+      "key": "url",
+      "type": "string",
+      "label": {
+        "en": "Address of the Homebridge UI",
+        "fr": "Adresse de l'interface Homebridge",
+        "de": "Adresse der Homebridge-Oberfläche",
+        "es": "Dirección de la interfaz de Homebridge"
       },
-      "placeholder": { "en": "e.g. 48.8566", "fr": "ex. 48.8566" },
-      "required": true,
-      "default": 48.8566,
-      "min": -90,
-      "max": 90
-    },
-    {
-      "key": "longitude",
-      "type": "number",
-      "label": { "en": "Longitude", "fr": "Longitude" },
       "description": {
-        "en": "Longitude used for the demo weather sensor.",
-        "fr": "Longitude utilisée par le capteur météo de démonstration."
+        "en": "Its IP address and port, as seen from the Gladys machine. Not a .local name, not localhost.",
+        "fr": "Son adresse IP et son port, vus depuis la machine de Gladys. Pas de nom en .local, pas localhost.",
+        "de": "IP-Adresse und Port, von der Gladys-Maschine aus gesehen. Kein .local-Name, nicht localhost.",
+        "es": "Su dirección IP y puerto, vistos desde la máquina de Gladys. Sin nombre .local, sin localhost."
       },
-      "placeholder": { "en": "e.g. 2.3522", "fr": "ex. 2.3522" },
-      "required": true,
-      "default": 2.3522,
-      "min": -180,
-      "max": 180
+      "placeholder": {
+        "en": "http://192.168.1.40:8581",
+        "fr": "http://192.168.1.40:8581",
+        "de": "http://192.168.1.40:8581",
+        "es": "http://192.168.1.40:8581"
+      },
+      "required": true
     },
     {
-      "key": "unit",
-      "type": "select",
-      "label": { "en": "Temperature unit", "fr": "Unité de température" },
-      "required": false,
-      "default": "celsius",
-      "options": [
-        { "value": "celsius", "label": { "en": "Celsius", "fr": "Celsius" } },
-        { "value": "fahrenheit", "label": { "en": "Fahrenheit", "fr": "Fahrenheit" } }
-      ]
-    },
-    {
-      "key": "poll_frequency",
-      "type": "number",
-      "label": { "en": "Refresh interval (s)", "fr": "Intervalle de rafraîchissement (s)" },
+      "key": "username",
+      "type": "string",
+      "label": {
+        "en": "User name",
+        "fr": "Nom d'utilisateur",
+        "de": "Benutzername",
+        "es": "Nombre de usuario"
+      },
       "description": {
-        "en": "How often sensors are polled, in seconds (one minute minimum).",
-        "fr": "Fréquence d'interrogation des capteurs, en secondes (une minute minimum)."
+        "en": "A user of the Homebridge UI; it does not need to be an administrator. Empty if the UI runs without login.",
+        "fr": "Un utilisateur de l'interface Homebridge ; pas besoin qu'il soit administrateur. Vide si l'interface tourne sans connexion.",
+        "de": "Ein Benutzer der Homebridge-Oberfläche; er muss kein Administrator sein. Leer, wenn die Oberfläche ohne Anmeldung läuft.",
+        "es": "Un usuario de la interfaz de Homebridge; no hace falta que sea administrador. Vacío si la interfaz funciona sin inicio de sesión."
       },
       "required": false,
-      "default": 300,
-      "min": 60,
+      "default": ""
+    },
+    {
+      "key": "password",
+      "type": "secret",
+      "label": {
+        "en": "Password",
+        "fr": "Mot de passe",
+        "de": "Passwort",
+        "es": "Contraseña"
+      },
+      "required": false
+    },
+    {
+      "key": "include_accessories",
+      "type": "string",
+      "label": {
+        "en": "Only these accessories",
+        "fr": "Seulement ces accessoires",
+        "de": "Nur dieses Zubehör",
+        "es": "Solo estos accesorios"
+      },
+      "description": {
+        "en": "Accessory names, separated by commas; * matches any text. Empty: every accessory.",
+        "fr": "Noms d'accessoires, séparés par des virgules ; * remplace n'importe quel texte. Vide : tous les accessoires.",
+        "de": "Zubehörnamen, durch Kommas getrennt; * steht für beliebigen Text. Leer: alles Zubehör.",
+        "es": "Nombres de accesorios, separados por comas; * sustituye cualquier texto. Vacío: todos los accesorios."
+      },
+      "placeholder": {
+        "en": "Living*, Garage",
+        "fr": "Living*, Garage",
+        "de": "Living*, Garage",
+        "es": "Living*, Garage"
+      },
+      "required": false,
+      "default": ""
+    },
+    {
+      "key": "exclude_accessories",
+      "type": "string",
+      "label": {
+        "en": "Accessories to leave out",
+        "fr": "Accessoires à écarter",
+        "de": "Auszulassendes Zubehör",
+        "es": "Accesorios a excluir"
+      },
+      "description": {
+        "en": "Accessory names, separated by commas; * matches any text. Never imported.",
+        "fr": "Noms d'accessoires, séparés par des virgules ; * remplace n'importe quel texte. Jamais importés.",
+        "de": "Zubehörnamen, durch Kommas getrennt; * steht für beliebigen Text. Nie importiert.",
+        "es": "Nombres de accesorios, separados por comas; * sustituye cualquier texto. Nunca se importan."
+      },
+      "placeholder": {
+        "en": "* battery, Test*",
+        "fr": "* battery, Test*",
+        "de": "* battery, Test*",
+        "es": "* battery, Test*"
+      },
+      "required": false,
+      "default": ""
+    },
+    {
+      "key": "security",
+      "type": "section",
+      "label": {
+        "en": "Security",
+        "fr": "Sécurité",
+        "de": "Sicherheit",
+        "es": "Seguridad"
+      },
+      "description": {
+        "en": "Locks, garage doors, motorised doors and alarms always show their state. Off, Gladys cannot open, unlock or disarm them, from a device, a scene or a voice assistant.",
+        "fr": "Serrures, portes de garage, portes motorisées et alarmes affichent toujours leur état. Désactivé, Gladys ne peut ni les ouvrir, ni les déverrouiller, ni les désarmer, depuis un appareil, une scène ou un assistant vocal.",
+        "de": "Schlösser, Garagentore, motorisierte Türen und Alarmanlagen zeigen immer ihren Zustand. Ausgeschaltet kann Gladys sie weder öffnen noch entriegeln noch entschärfen, über Gerät, Szene oder Sprachassistent.",
+        "es": "Cerraduras, puertas de garaje, puertas motorizadas y alarmas muestran siempre su estado. Desactivado, Gladys no puede abrirlas, desbloquearlas ni desarmarlas, desde un dispositivo, una escena o un asistente de voz."
+      }
+    },
+    {
+      "key": "allow_lock_commands",
+      "type": "boolean",
+      "label": {
+        "en": "Allow commands of locks",
+        "fr": "Autoriser les commandes des serrures",
+        "de": "Befehle für Schlösser erlauben",
+        "es": "Permitir comandos de cerraduras"
+      },
+      "required": false,
+      "default": false
+    },
+    {
+      "key": "allow_garage_door_commands",
+      "type": "boolean",
+      "label": {
+        "en": "Allow commands of garage and motorised doors",
+        "fr": "Autoriser les commandes des portes de garage et motorisées",
+        "de": "Befehle für Garagentore und motorisierte Türen erlauben",
+        "es": "Permitir comandos de puertas de garaje y motorizadas"
+      },
+      "required": false,
+      "default": false
+    },
+    {
+      "key": "allow_alarm_commands",
+      "type": "boolean",
+      "label": {
+        "en": "Allow arming and disarming the alarms",
+        "fr": "Autoriser l'armement et le désarmement des alarmes",
+        "de": "Scharfschalten und Entschärfen der Alarmanlagen erlauben",
+        "es": "Permitir armar y desarmar las alarmas"
+      },
+      "required": false,
+      "default": false
+    },
+    {
+      "key": "sensor_interval",
+      "type": "number",
+      "label": {
+        "en": "Minimum interval between two values of a sensor (s)",
+        "fr": "Intervalle minimum entre deux valeurs d'un capteur (s)",
+        "de": "Mindestabstand zwischen zwei Werten eines Sensors (s)",
+        "es": "Intervalo mínimo entre dos valores de un sensor (s)"
+      },
+      "description": {
+        "en": "A sensor that reports every second is sent to Gladys at this pace. Switches and detectors are never delayed.",
+        "fr": "Un capteur qui publie chaque seconde est transmis à Gladys à ce rythme. Interrupteurs et détecteurs ne sont jamais retardés.",
+        "de": "Ein Sensor, der jede Sekunde meldet, wird in diesem Takt an Gladys gesendet. Schalter und Melder werden nie verzögert.",
+        "es": "Un sensor que informa cada segundo se envía a Gladys a este ritmo. Interruptores y detectores nunca se retrasan."
+      },
+      "required": false,
+      "default": 10,
+      "min": 0,
       "max": 3600
+    },
+    {
+      "key": "language",
+      "type": "select",
+      "label": {
+        "en": "Language of the feature names",
+        "fr": "Langue des noms de fonctionnalités",
+        "de": "Sprache der Funktionsnamen",
+        "es": "Idioma de los nombres de funciones"
+      },
+      "required": false,
+      "default": "fr",
+      "options": [
+        {
+          "value": "en",
+          "label": {
+            "en": "English",
+            "fr": "Anglais",
+            "de": "Englisch",
+            "es": "Inglés"
+          }
+        },
+        {
+          "value": "fr",
+          "label": {
+            "en": "French",
+            "fr": "Français",
+            "de": "Französisch",
+            "es": "Francés"
+          }
+        },
+        {
+          "value": "de",
+          "label": {
+            "en": "German",
+            "fr": "Allemand",
+            "de": "Deutsch",
+            "es": "Alemán"
+          }
+        },
+        {
+          "value": "es",
+          "label": {
+            "en": "Spanish",
+            "fr": "Espagnol",
+            "de": "Spanisch",
+            "es": "Español"
+          }
+        }
+      ]
     }
   ],
   "actions": [
     {
-      "key": "test_weather",
-      "label": { "en": "Test the weather provider", "fr": "Tester le fournisseur météo" },
+      "key": "test_connection",
+      "label": {
+        "en": "Test the connection",
+        "fr": "Tester la connexion",
+        "de": "Verbindung testen",
+        "es": "Probar la conexión"
+      },
       "timeout_seconds": 30
-    },
-    {
-      "key": "identify",
-      "label": { "en": "Identify a device", "fr": "Identifier un appareil" },
-      "fields": [
-        {
-          "key": "device",
-          "type": "select",
-          "source": "devices",
-          "label": { "en": "Device", "fr": "Appareil" },
-          "required": true
-        }
-      ]
     }
   ],
   "scene_triggers": [
     {
-      "key": "motion_detected",
-      "label": { "en": "Motion detected", "fr": "Mouvement détecté" },
+      "key": "button_pressed",
+      "label": {
+        "en": "Homebridge button pressed",
+        "fr": "Bouton Homebridge appuyé",
+        "de": "Homebridge-Taste gedrückt",
+        "es": "Botón de Homebridge pulsado"
+      },
       "description": {
-        "en": "A demo motion sensor saw a person or an animal move.",
-        "fr": "Un détecteur de démonstration a vu bouger une personne ou un animal."
+        "en": "A programmable switch or a doorbell of Homebridge was pressed (needs the live updates).",
+        "fr": "Un interrupteur programmable ou une sonnette de Homebridge a été appuyé (demande les mises à jour en direct).",
+        "de": "Ein programmierbarer Schalter oder eine Türklingel von Homebridge wurde gedrückt (braucht die Live-Aktualisierung).",
+        "es": "Se pulsó un interruptor programable o un timbre de Homebridge (requiere las actualizaciones en directo)."
       },
       "fields": [
         {
-          "key": "device",
-          "type": "select",
-          "source": "devices",
-          "label": { "en": "Sensor", "fr": "Détecteur" }
+          "key": "accessory",
+          "type": "string",
+          "label": {
+            "en": "Accessory (optional)",
+            "fr": "Accessoire (facultatif)",
+            "de": "Zubehör (optional)",
+            "es": "Accesorio (opcional)"
+          },
+          "placeholder": {
+            "en": "Doorbell",
+            "fr": "Doorbell",
+            "de": "Doorbell",
+            "es": "Doorbell"
+          }
         },
         {
-          "key": "target",
-          "type": "multi_select",
-          "label": { "en": "What moved", "fr": "Ce qui a bougé" },
+          "key": "press",
+          "type": "select",
+          "label": {
+            "en": "Press (optional)",
+            "fr": "Appui (facultatif)",
+            "de": "Druck (optional)",
+            "es": "Pulsación (opcional)"
+          },
           "options": [
-            { "value": "person", "label": { "en": "Person", "fr": "Personne" } },
-            { "value": "animal", "label": { "en": "Animal", "fr": "Animal" } }
+            {
+              "value": "single",
+              "label": {
+                "en": "Single press",
+                "fr": "Appui simple",
+                "de": "Einfacher Druck",
+                "es": "Pulsación simple"
+              }
+            },
+            {
+              "value": "double",
+              "label": {
+                "en": "Double press",
+                "fr": "Double appui",
+                "de": "Doppelter Druck",
+                "es": "Pulsación doble"
+              }
+            },
+            {
+              "value": "long",
+              "label": {
+                "en": "Long press",
+                "fr": "Appui long",
+                "de": "Langer Druck",
+                "es": "Pulsación larga"
+              }
+            }
           ]
         }
       ],
       "variables": [
         {
-          "key": "target",
+          "key": "accessory",
           "type": "string",
-          "label": { "en": "What moved", "fr": "Ce qui a bougé" }
+          "label": {
+            "en": "Accessory",
+            "fr": "Accessoire",
+            "de": "Zubehör",
+            "es": "Accesorio"
+          }
+        },
+        {
+          "key": "button",
+          "type": "string",
+          "label": {
+            "en": "Button",
+            "fr": "Bouton",
+            "de": "Taste",
+            "es": "Botón"
+          }
+        },
+        {
+          "key": "press",
+          "type": "string",
+          "label": {
+            "en": "Press",
+            "fr": "Appui",
+            "de": "Druck",
+            "es": "Pulsación"
+          }
+        }
+      ]
+    },
+    {
+      "key": "alarm_changed",
+      "label": {
+        "en": "Homebridge alarm changed",
+        "fr": "Alarme Homebridge modifiée",
+        "de": "Homebridge-Alarm geändert",
+        "es": "Alarma de Homebridge modificada"
+      },
+      "description": {
+        "en": "A security system of Homebridge was armed, disarmed or triggered.",
+        "fr": "Un système de sécurité de Homebridge a été armé, désarmé ou déclenché.",
+        "de": "Ein Sicherheitssystem von Homebridge wurde scharf geschaltet, entschärft oder ausgelöst.",
+        "es": "Un sistema de seguridad de Homebridge fue armado, desarmado o disparado."
+      },
+      "fields": [
+        {
+          "key": "accessory",
+          "type": "string",
+          "label": {
+            "en": "Alarm (optional)",
+            "fr": "Alarme (facultatif)",
+            "de": "Alarmanlage (optional)",
+            "es": "Alarma (opcional)"
+          },
+          "placeholder": {
+            "en": "Alarm",
+            "fr": "Alarm",
+            "de": "Alarm",
+            "es": "Alarm"
+          }
+        },
+        {
+          "key": "state",
+          "type": "select",
+          "label": {
+            "en": "New state (optional)",
+            "fr": "Nouvel état (facultatif)",
+            "de": "Neuer Zustand (optional)",
+            "es": "Nuevo estado (opcional)"
+          },
+          "options": [
+            {
+              "value": "home",
+              "label": {
+                "en": "Armed (home)",
+                "fr": "Armée (présent)",
+                "de": "Scharf (zu Hause)",
+                "es": "Armada (en casa)"
+              }
+            },
+            {
+              "value": "away",
+              "label": {
+                "en": "Armed (away)",
+                "fr": "Armée (absent)",
+                "de": "Scharf (abwesend)",
+                "es": "Armada (fuera)"
+              }
+            },
+            {
+              "value": "night",
+              "label": {
+                "en": "Armed (night)",
+                "fr": "Armée (nuit)",
+                "de": "Scharf (Nacht)",
+                "es": "Armada (noche)"
+              }
+            },
+            {
+              "value": "disarmed",
+              "label": {
+                "en": "Disarmed",
+                "fr": "Désarmée",
+                "de": "Entschärft",
+                "es": "Desarmada"
+              }
+            },
+            {
+              "value": "triggered",
+              "label": {
+                "en": "Triggered",
+                "fr": "Déclenchée",
+                "de": "Ausgelöst",
+                "es": "Disparada"
+              }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "accessory",
+          "type": "string",
+          "label": {
+            "en": "Accessory",
+            "fr": "Accessoire",
+            "de": "Zubehör",
+            "es": "Accesorio"
+          }
+        },
+        {
+          "key": "state",
+          "type": "string",
+          "label": {
+            "en": "New state",
+            "fr": "Nouvel état",
+            "de": "Neuer Zustand",
+            "es": "Nuevo estado"
+          }
+        },
+        {
+          "key": "previous_state",
+          "type": "string",
+          "label": {
+            "en": "Previous state",
+            "fr": "État précédent",
+            "de": "Vorheriger Zustand",
+            "es": "Estado anterior"
+          }
         }
       ]
     }
   ],
   "scene_actions": [
     {
-      "key": "identify_device",
-      "label": { "en": "Identify a device", "fr": "Identifier un appareil" },
-      "description": {
-        "en": "Make a device signal itself (the demo light blinks).",
-        "fr": "Fait se signaler un appareil (la lampe de démonstration clignote)."
+      "key": "set_alarm",
+      "label": {
+        "en": "Arm or disarm a Homebridge alarm",
+        "fr": "Armer ou désarmer une alarme Homebridge",
+        "de": "Homebridge-Alarm scharf schalten oder entschärfen",
+        "es": "Armar o desarmar una alarma de Homebridge"
       },
-      "timeout_seconds": 15,
+      "description": {
+        "en": "Changes the mode of a security system. Needs the alarm commands allowed in the configuration.",
+        "fr": "Change le mode d'un système de sécurité. Demande d'autoriser les commandes des alarmes dans la configuration.",
+        "de": "Ändert den Modus eines Sicherheitssystems. Braucht die erlaubten Alarmbefehle in der Konfiguration.",
+        "es": "Cambia el modo de un sistema de seguridad. Requiere permitir los comandos de alarmas en la configuración."
+      },
+      "timeout_seconds": 30,
       "fields": [
         {
-          "key": "device",
+          "key": "mode",
           "type": "select",
-          "source": "devices",
-          "label": { "en": "Device", "fr": "Appareil" },
+          "label": {
+            "en": "Mode",
+            "fr": "Mode",
+            "de": "Modus",
+            "es": "Modo"
+          },
+          "options": [
+            {
+              "value": "home",
+              "label": {
+                "en": "Arm (home)",
+                "fr": "Armer (présent)",
+                "de": "Scharf (zu Hause)",
+                "es": "Armar (en casa)"
+              }
+            },
+            {
+              "value": "away",
+              "label": {
+                "en": "Arm (away)",
+                "fr": "Armer (absent)",
+                "de": "Scharf (abwesend)",
+                "es": "Armar (fuera)"
+              }
+            },
+            {
+              "value": "night",
+              "label": {
+                "en": "Arm (night)",
+                "fr": "Armer (nuit)",
+                "de": "Scharf (Nacht)",
+                "es": "Armar (noche)"
+              }
+            },
+            {
+              "value": "disarm",
+              "label": {
+                "en": "Disarm",
+                "fr": "Désarmer",
+                "de": "Entschärfen",
+                "es": "Desarmar"
+              }
+            }
+          ],
           "required": true
-        }
-      ],
-      "outputs": [
+        },
         {
-          "key": "signalled",
-          "type": "boolean",
-          "label": { "en": "Device signalled", "fr": "Appareil signalé" }
+          "key": "alarm",
+          "type": "string",
+          "label": {
+            "en": "Alarm (if several)",
+            "fr": "Alarme (s'il y en a plusieurs)",
+            "de": "Alarmanlage (falls mehrere)",
+            "es": "Alarma (si hay varias)"
+          },
+          "placeholder": {
+            "en": "Alarm",
+            "fr": "Alarm",
+            "de": "Alarm",
+            "es": "Alarm"
+          }
+        }
+      ]
+    },
+    {
+      "key": "set_characteristic",
+      "label": {
+        "en": "Set a Homebridge characteristic",
+        "fr": "Modifier une caractéristique Homebridge",
+        "de": "Homebridge-Eigenschaft setzen",
+        "es": "Establecer una característica de Homebridge"
+      },
+      "description": {
+        "en": "Sets any writable characteristic of an accessory, even one not added to Gladys: On, TargetPosition, ActiveIdentifier…",
+        "fr": "Modifie n'importe quelle caractéristique modifiable d'un accessoire, même non ajouté à Gladys : On, TargetPosition, ActiveIdentifier…",
+        "de": "Setzt eine beliebige schreibbare Eigenschaft eines Zubehörs, auch eines nicht hinzugefügten: On, TargetPosition, ActiveIdentifier…",
+        "es": "Establece cualquier característica modificable de un accesorio, aunque no esté añadido a Gladys: On, TargetPosition, ActiveIdentifier…"
+      },
+      "timeout_seconds": 30,
+      "fields": [
+        {
+          "key": "accessory",
+          "type": "string",
+          "label": {
+            "en": "Accessory",
+            "fr": "Accessoire",
+            "de": "Zubehör",
+            "es": "Accesorio"
+          },
+          "placeholder": {
+            "en": "Living room TV",
+            "fr": "Living room TV",
+            "de": "Living room TV",
+            "es": "Living room TV"
+          },
+          "required": true
+        },
+        {
+          "key": "characteristic",
+          "type": "string",
+          "label": {
+            "en": "Characteristic",
+            "fr": "Caractéristique",
+            "de": "Eigenschaft",
+            "es": "Característica"
+          },
+          "placeholder": {
+            "en": "ActiveIdentifier",
+            "fr": "ActiveIdentifier",
+            "de": "ActiveIdentifier",
+            "es": "ActiveIdentifier"
+          }
+        },
+        {
+          "key": "value",
+          "type": "string",
+          "label": {
+            "en": "Value",
+            "fr": "Valeur",
+            "de": "Wert",
+            "es": "Valor"
+          },
+          "placeholder": {
+            "en": "2",
+            "fr": "2",
+            "de": "2",
+            "es": "2"
+          }
         }
       ]
     }
   ],
   "widgets": [
     {
-      "key": "demo_status",
-      "label": { "en": "Demo status", "fr": "État de la démo" },
-      "description": {
-        "en": "Live temperature and plug power, plug connection and observed location.",
-        "fr": "Température et puissance en direct, connexion de la prise, position observée."
+      "key": "status",
+      "label": {
+        "en": "Homebridge",
+        "fr": "Homebridge",
+        "de": "Homebridge",
+        "es": "Homebridge"
       },
-      "icon": "activity",
-      "action_timeout_seconds": 15
+      "description": {
+        "en": "Connection to Homebridge, live updates, devices added and services followed.",
+        "fr": "Connexion à Homebridge, mises à jour en direct, appareils ajoutés et services suivis.",
+        "de": "Verbindung zu Homebridge, Live-Aktualisierung, hinzugefügte Geräte und verfolgte Dienste.",
+        "es": "Conexión a Homebridge, actualizaciones en directo, dispositivos añadidos y servicios seguidos."
+      },
+      "icon": "home",
+      "action_timeout_seconds": 30
     }
   ]
 }

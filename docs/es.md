@@ -1,0 +1,189 @@
+# Puente Homebridge
+
+Esta integración conecta Gladys con **su Homebridge** y ofrece los accesorios
+de todos sus plugins en la pestaña **Descubrir** de Gladys: luces, interruptores
+y enchufes, termostatos y aires acondicionados, persianas y ventanas,
+ventiladores, válvulas, sensores y detectores, cerraduras y puertas de garaje.
+Una vez añadido un dispositivo, sus valores siguen a Homebridge **en directo**,
+y Gladys lo controla **a través de Homebridge**, que conserva sus plugins (Hue,
+Tuya, Shelly, Ring, dispositivos en la nube…). Todo se queda en su red local. No
+oficial, sin relación con el proyecto Homebridge ni con Apple.
+
+El núcleo de Gladys ya tiene una integración HomeKit que funciona en el sentido
+contrario (los dispositivos de Gladys en la app Casa de Apple). Esta trae los
+accesorios de Homebridge **a** Gladys.
+
+> Desarrollada con Homebridge 2.4.0 y Homebridge UI 5.29.0 en Docker, con los
+> accesorios virtuales de homebridge-dummy, no con hardware real: sus
+> comentarios son bienvenidos en el repositorio de GitHub.
+
+## Requisitos
+
+- Homebridge con su interfaz web (**Homebridge UI**, homebridge-config-ui-x
+  5.x), accesible desde la máquina de Gladys (misma red, o una VPN).
+- Homebridge en **modo insecure**: en la interfaz de Homebridge, **Ajustes →
+  Homebridge Settings → Homebridge Insecure Mode** (activo por defecto con
+  hb-service), y luego reinicie Homebridge. Es también lo que necesita la página
+  Accesorios de la interfaz: lee y controla los accesorios mediante el protocolo
+  HomeKit de sus propios puentes, con su PIN. Cualquier programa de su red que
+  conozca el PIN puede entonces hacer lo mismo, sin emparejamiento HomeKit.
+- Un **usuario de la interfaz de Homebridge** para Gladys, sin autenticación de
+  dos factores (un contenedor no puede volver a escribir un código de un solo
+  uso). No hace falta que sea administrador: cree un usuario dedicado en **User
+  Accounts**.
+
+## Configuración
+
+### Dirección y usuario
+
+1. En la interfaz de Homebridge, **User Accounts → Add**: un usuario `gladys`,
+   una contraseña robusta, no administrador.
+2. En Gladys, abra la integración, **Configuración**:
+   - **Dirección de la interfaz de Homebridge**: como
+     `http://192.168.1.40:8581`. Sin nombre `.local`, sin `localhost`: la
+     integración funciona en su propio contenedor.
+   - **Nombre de usuario** y **contraseña** de ese usuario. Déjelos vacíos si
+     su interfaz funciona sin inicio de sesión (autenticación desactivada).
+3. Pulse **Probar la conexión**: aparecen la versión de Homebridge, el número de
+   dispositivos ofrecidos y los servicios no importados.
+4. Abra la pestaña **Descubrir** y añada los dispositivos que quiera. Sus
+   valores se envían en cuanto se añaden.
+
+### Elegir qué importar
+
+Gladys ofrece un dispositivo por accesorio de Homebridge, con las funciones de
+todos sus servicios (un sensor de temperatura, humedad y batería es un solo
+dispositivo).
+
+- **Solo estos accesorios**: nombres separados por comas, `*` sustituye
+  cualquier texto (`Salón*, Garaje`). Vacío: todos los accesorios.
+- **Accesorios a excluir**: nunca se importan (`* battery, Test*`).
+
+Un nombre coincide con el nombre del accesorio o con uno de sus nombres de
+servicio, sin distinguir mayúsculas. Solo los dispositivos añadidos en Gladys
+reciben valores: los demás no cuestan nada.
+
+### Cerraduras, puertas de garaje y alarmas
+
+Por defecto, las **cerraduras**, **puertas de garaje**, **puertas motorizadas**
+y **alarmas (sistemas de seguridad)** son de **solo lectura** en Gladys: usted
+ve si están bloqueadas, abiertas o cerradas, pero Gladys no puede abrirlas,
+desbloquearlas ni desarmarlas, ni desde un dispositivo, ni desde una escena, ni
+desde un asistente de voz conectado a Gladys. Cada familia tiene su propio
+interruptor en la configuración: **Permitir comandos de cerraduras**,
+**Permitir comandos de puertas de garaje y motorizadas**, **Permitir armar y
+desarmar las alarmas**. Active solo lo necesario: un error en una escena podría
+entonces abrir su casa.
+
+### Opciones
+
+- **Intervalo mínimo entre dos valores de un sensor**: un sensor que informa
+  cada segundo se envía a este ritmo (10 segundos por defecto). Interruptores,
+  luces, persianas y detectores nunca se retrasan.
+- **Idioma de los nombres de funciones**: los sufijos de las funciones
+  secundarias («Brillo», «Batería»…). Los nombres de accesorios se mantienen
+  como en Homebridge.
+
+## Lo que obtiene
+
+### Dispositivos
+
+| Servicio de Homebridge (HAP)                                  | En Gladys                                                                        |
+| ------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Lightbulb                                                     | luz: encendido/apagado, brillo, color, temperatura de color (según oferta)       |
+| Switch, Outlet                                                | interruptor encendido/apagado                                                    |
+| Fan, Fanv2, AirPurifier, HumidifierDehumidifier               | interruptor encendido/apagado, velocidad del ventilador (%)                      |
+| Valve, Faucet, IrrigationSystem, Television                   | interruptor encendido/apagado                                                    |
+| Thermostat                                                    | consigna, modo (apagado, calor, frío, auto), temperatura actual                  |
+| HeaterCooler                                                  | aire acondicionado: encendido/apagado, modo, consigna del modo actual            |
+| WindowCovering, Window                                        | persiana: abrir, cerrar (parar si el accesorio puede), posición                  |
+| Door                                                          | posición y abierta o cerrada; comandos solo si están permitidos                  |
+| LockMechanism                                                 | cerradura: bloqueada o no; comandos solo si están permitidos                     |
+| GarageDoorOpener                                              | abierta o cerrada; abrir/cerrar solo si está permitido                           |
+| Sensores de temperatura, humedad, luz, CO2, partículas        | sensores con su unidad                                                           |
+| Detectores de movimiento, presencia, apertura, fuga, humo, CO | sensores binarios (una apertura vale 0 cuando está abierta, como en todo Gladys) |
+| Batería, batería baja, manipulación                           | nivel de batería, alertas de batería baja y de manipulación                      |
+
+Los demás servicios (cámaras, altavoces, entradas de TV…) aparecen en la prueba
+de conexión como «no importados». La acción de escena siguiente llega igualmente
+a sus características.
+
+### Widget del panel
+
+El widget **Homebridge** muestra la conexión, cómo llegan los valores («En
+directo» por el socket de la interfaz, o «Consulta periódica»), la versión de
+Homebridge, los dispositivos ofrecidos y añadidos, los servicios seguidos, y un
+botón **Recargar** que vuelve a leer la lista de accesorios.
+
+### Disparadores de escena
+
+- **Botón de Homebridge pulsado**: se pulsó un interruptor programable
+  (StatelessProgrammableSwitch) o un timbre. Filtros: accesorio, pulsación
+  (simple, doble, larga). Variables: accesorio, botón, pulsación. Requiere las
+  actualizaciones en directo: una pulsación es un evento, la consulta periódica
+  no la ve.
+- **Alarma de Homebridge modificada**: un sistema de seguridad fue armado (en
+  casa, fuera, noche), desarmado o disparado. Filtros: alarma, nuevo estado.
+  Variables: accesorio, estado, estado anterior.
+
+### Acciones de escena
+
+- **Armar o desarmar una alarma de Homebridge**: en casa, fuera, noche o
+  desarmar. Requiere **Permitir armar y desarmar las alarmas**. El nombre solo
+  hace falta si hay varios sistemas de seguridad.
+- **Establecer una característica de Homebridge**: cualquier característica
+  modificable de cualquier accesorio, aunque no esté añadido a Gladys: la
+  entrada de un televisor (`ActiveIdentifier`), la oscilación de un ventilador
+  (`SwingMode`), un interruptor (`On`, `true`). Los nombres son los del
+  protocolo HomeKit, tal como la interfaz de Homebridge los muestra en el
+  detalle de un accesorio. Los interruptores de seguridad también se aplican
+  aquí.
+
+## Ejemplos de escenas
+
+- Cuando se pulsa el botón del timbre (disparador), tomar una foto con una
+  cámara y enviarla a su teléfono.
+- Cuando la alarma de Homebridge pasa a «disparada», encender todas las luces y
+  enviar un mensaje.
+- A las 7 entre semana, poner la entrada del televisor del salón en 3 con
+  «Establecer una característica de Homebridge», y la consigna del termostato
+  en 20 °C.
+
+## Solución de problemas
+
+- **«Homebridge no funciona en modo insecure»**: active **Homebridge Insecure
+  Mode** en los ajustes de Homebridge y reinicie Homebridge. Se hace un nuevo
+  intento cada minuto.
+- **«Homebridge rechaza el inicio de sesión»**: compruebe el usuario y la
+  contraseña; un usuario con autenticación de dos factores no sirve. Tras 10
+  fallos en 5 minutos, la interfaz bloquea la cuenta 5 minutos: la integración
+  solo vuelve a intentarlo cada 5 minutos.
+- **«Homebridge no está accesible»**: compruebe la dirección desde la máquina de
+  Gladys (`curl http://<dirección>:8581/api/auth/settings`). Se hace un nuevo
+  intento tras 5 segundos, y luego hasta cada minuto.
+- **El widget indica «Consulta periódica»**: el socket de la interfaz
+  (`/socket.io`) no pasa, a menudo por un proxy inverso sin WebSocket. Los
+  valores siguen llegando cada 30 segundos, las pulsaciones de botón no.
+- **Falta un accesorio**: lance la prueba de conexión, lista los servicios no
+  importados. Compruebe los nombres a incluir y a excluir, y que el accesorio
+  aparece en la página Accesorios de la interfaz de Homebridge.
+- **Registros**: ponga `LOG_LEVEL=debug` para ver cada valor recibido.
+
+## Límites
+
+- Desarrollada sin hardware real, con homebridge-dummy: sus comentarios son
+  bienvenidos.
+- Los accesorios Matter de Homebridge 2 no se importan (la API REST de la
+  interfaz solo lista los accesorios HomeKit).
+- Leer la lista pide sus valores a cada accesorio: sin el socket, ocurre cada 30
+  segundos, lo que algunos plugins en la nube pueden llevar mal.
+- Reiniciar la caché de accesorios de Homebridge (o cambiar el nombre de usuario
+  de un puente) da nuevos identificadores: hay que volver a añadir los
+  dispositivos. Renombrar un accesorio, no.
+- Los nombres de las funciones se fijan al añadir el dispositivo en Gladys.
+
+## Privacidad
+
+El puente solo habla con su interfaz de Homebridge, en su red. Gladys guarda la
+contraseña en su configuración y nunca la escribe en los registros; el token de
+sesión solo vive en memoria. No se envía nada a internet.

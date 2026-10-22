@@ -32,15 +32,20 @@ pushing.
 
 ```
 index.js                          SDK wiring only: handlers registered before connect()
-src/devices/index.js              registry of the device blueprints + dispatch helpers
-src/devices/<type>.js             one device type per file (buildDevice, onPoll, onSetValue...)
-src/scenes.js                     scene action handlers (manifest `scene_actions`)
-src/widgets.js                    dashboard widget handlers (manifest `widgets`)
+src/app.js                        every handler of the manifest, on the bridge
+src/bridge.js                     the Homebridge connection: inventory, socket, polling, commands, triggers
+src/homebridge/client.js          REST API of the Homebridge UI (fetch) and Socket.IO by hand (WebSocket)
+src/inventory.js                  services -> Gladys devices (accessories), routing tables (pure)
+src/mapping.js                    one HAP service -> its features: read, write, security families (pure)
+src/publisher.js                  states sent to Gladys within 250 per minute, 12 h heartbeat
+src/scenes.js                     scene actions (set_alarm, set_characteristic) and the security guard
+src/widgets.js                    dashboard widget `status`
+src/texts.js                      every text of the container, in four languages
 src/config.js                     DEFAULT_CONFIG (mirrors the manifest defaults) + normalization
-src/weather.js                    example driver (Open-Meteo)
 gladys-assistant-integration.json manifest: name, config_schema, actions, image...
-docs/en.md, docs/fr.md            user documentation, re-hosted by Gladys (mandatory)
-test/                             node --test, against the SDK's fake Gladys (integration-sdk/testing)
+docs/{en,fr,de,es}.md             user documentation, re-hosted by Gladys (en and fr mandatory)
+test/                             node --test, against the SDK's fake Gladys and a fake Homebridge UI
+test/fixtures/homebridge/         accessory list of a real Homebridge 2.4.0 (homebridge-dummy)
 .github/scripts/release.mjs       release helpers (manifest bump, changelog), tested in test/
 ```
 
@@ -70,8 +75,9 @@ test/                             node --test, against the SDK's fake Gladys (in
   `type: "provider"`: 5.1.0). `test/manifest.test.js` ties the manifest to the
   code (defaults, action, scene and widget handlers): change both sides
   together.
-- **User-facing text** is bilingual (English and French): action messages,
-  manifest texts, and `docs/en.md` / `docs/fr.md`, kept in sync.
+- **User-facing text** is in four languages (English, French, German,
+  Spanish): action messages, manifest texts, and `docs/{en,fr,de,es}.md`, kept
+  in sync (`test/i18n.test.js`).
 - **Style.** Prettier formats, ESLint catches mistakes. Comments explain why,
   in English. Tests never touch the network.
 
@@ -233,3 +239,37 @@ long, et sur un « Sie »/« Ihr… » de politesse en allemand. Le store exige 
 - Docs `en`, `fr`, `de`, `es` avec les mêmes sections.
 - Chauffe, ouverture, sécurité : ne rien rendre pilotable « comme un thermostat » ou par un assistant
   vocal quand une erreur serait dangereuse (leçon d'OctoPrint).
+
+## Homebridge (propre à cette intégration)
+
+Vérifié contre `homebridge/homebridge:latest` (Homebridge 2.4.0, UI 5.29.0) en Docker, réseau en pont sans port
+publié, `HOMEBRIDGE_INSECURE=1`, plugin `homebridge-dummy` 2.1.3 (plateforme `HomebridgeDummy`, pas `Dummy`) ; premier
+utilisateur créé par `GET /api/setup-wizard/get-setup-wizard-token` puis `POST /api/setup-wizard/create-first-user`. Les
+accessoires factices se pilotent côté Homebridge par le webhook de homebridge-dummy (`enableWebhook`, port 63743,
+`GET /?id=<id>&set=<Characteristic>&value=<v>`) : c'est ainsi qu'on simule un changement venu d'un plugin.
+
+- **Mode insecure** obligatoire : sans lui, `GET /api/accessories` répond 400 « must be running in insecure mode ».
+  Avec hb-service il est actif par défaut (`-I`), en Docker c'est `HOMEBRIDGE_INSECURE=1`.
+- **Authentification** : `POST /api/auth/login` → 201 `{ access_token, expires_in: 28800 }` ; mauvais identifiants
+  → **403** ; mauvais jeton → 401 ; `POST /api/auth/noauth` donne un jeton seulement si l'interface tourne sans
+  connexion (sinon 401). Un utilisateur **non administrateur** suffit (`AuthGuard` seul sur `/api/accessories`).
+  Double authentification inutilisable (code à usage unique) : pas de champ OTP. **Verrouillage** après 10 échecs en
+  5 minutes (par utilisateur et adresse) : un refus n'est retenté que toutes les 5 minutes.
+- `GET /api/accessories` : services HAP de tous les ponts (principal et enfants), `uniqueId` =
+  sha256(username du pont + aid + iid + type) (hap-client). Les booléens arrivent en **0/1** (`On=0`). Le service
+  `ProtocolInformation` de l'accessoire du pont (aid 1) est toujours présent. Les accessoires Matter n'y sont pas.
+- `PUT /api/accessories/{uniqueId}` `{ characteristicType, value }` → 200 avec le service relu (le retour d'état).
+  Service inconnu → 400 `{ message }`. **L'UI ne vérifie les bornes que des `uint*` et `float`** : un `Brightness` (int)
+  à 400 passe, l'accessoire l'ignore et l'UI répond 200 : le pont refuse lui-même hors bornes.
+- **Socket.IO** `/accessories` (Engine.IO 4, `allowEIO3`) : `ws://…/socket.io/?EIO=4&transport=websocket`, `0{…}` →
+  envoyer `40/accessories,{"token":…}` → `40/accessories,{sid}` → `42/accessories,["get-accessories"]` →
+  `42/accessories,["accessories-data",[…]]` : la liste entière (deux fois, à 0 et 3 s), puis chaque service modifié.
+  Ping serveur `2` toutes les 25 s, répondre `3`. Le jeton n'est vérifié que sur les messages du client.
+  **Une liste entière contient l'accessoire du pont (aid 1)** : c'est ce qui distingue un ancien appui de bouton (valeur
+  restée dans la liste) d'un nouvel appui (`ProgrammableSwitchEvent` n'a pas d'état, seulement des événements).
+- `ContactSensorState` : 0 = contact détecté (**fermé**), à inverser pour Gladys. `CurrentDoorState` : fermé seulement
+  à 1. Positions HAP et Gladys : 100 = ouvert, pas d'inversion.
+- Choix de conception : un appareil par accessoire (`accessory:<username du pont sans « : »>-<aid>`), fonctionnalités
+  `<iid du service>-<rôle>` ; boutons et systèmes de sécurité = déclencheurs (et action `set_alarm`), pas
+  d'appareil ; serrures, portes de garage / motorisées et alarmes non pilotables sauf option par famille, y compris par
+  `set_characteristic`.
