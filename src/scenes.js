@@ -75,7 +75,7 @@ export function sceneActions(bridge) {
         throw bridge.error('bad_accessory');
       }
       const type = String(fields.characteristic ?? '').trim();
-      const value = parseValue(fields.value);
+      let value = parseValue(fields.value);
       if (value === undefined || String(fields.value).length > 1000) {
         throw bridge.error('bad_value');
       }
@@ -92,6 +92,11 @@ export function sceneActions(bridge) {
       }
       const [service] = candidates;
       guard(bridge, service);
+      // The UI parses integer characteristics with parseInt: "on" must travel as 1.
+      const format = bridge.charOf(service, type).format;
+      if (typeof value === 'boolean' && format !== 'bool') {
+        value = value ? 1 : 0;
+      }
       bridge.logger.info(`Scene action: ${type}=${String(value).slice(0, 40)} to ${name}`);
       await bridge.write(service.uniqueId, [{ type, value }]);
     },

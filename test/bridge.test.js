@@ -4,7 +4,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createLogger } from '@gladysassistant/integration-sdk';
-import { createHomebridge } from './helpers/fakeHomebridge.js';
+import { createHomebridge, hapService } from './helpers/fakeHomebridge.js';
 import { captureLogs } from './helpers/logs.js';
 import {
   FAST_TIMINGS,
@@ -284,4 +284,57 @@ test('a normal cycle writes nothing at info level', async (t) => {
   await world.bridge.refresh();
   await flushed(world);
   assert.deepEqual(logs.stop(), []);
+});
+
+test('an unbridged doorbell (aid 1) still starts the trigger; Matter updates are ignored', async (t) => {
+  const hb = createHomebridge();
+  const doorbell = hapService(1, 9, 'Doorbell', 'Video doorbell', [
+    ['ProgrammableSwitchEvent', null, 'uint8', { minValue: 0, maxValue: 2 }],
+  ]);
+  doorbell.instance = { ...doorbell.instance, username: '0E:00:00:00:00:02' };
+  hb.services.push(doorbell);
+  const world = await createWorld({ hb });
+  t.after(() => world.app.stop());
+  const reads = hb.logins;
+  hb.change('Video doorbell', 'ProgrammableSwitchEvent', 0);
+  await until(() => world.fake.sceneEvents.length === 1, { what: 'the press' });
+  assert.equal(world.fake.sceneEvents[0].data.accessory, 'Video doorbell');
+  let listed = 0;
+  const fetch = hb.fetch;
+  hb.fetch = (url, init) => {
+    if (String(url).endsWith('/api/accessories')) {
+      listed += 1;
+    }
+    return fetch(url, init);
+  };
+  hb.emit([{ uniqueId: 'matter:abc', aid: 0, iid: 0, type: 'Matter', serviceCharacteristics: [] }]);
+  await new Promise((resolve) => setTimeout(resolve, 80));
+  assert.equal(listed, 0, 'no re-read for a Matter update');
+  assert.equal(hb.logins, reads);
+});
+
+test('an empty list while Homebridge restarts is a loss, not an empty Discovery tab', async (t) => {
+  const hb = createHomebridge();
+  const world = await createWorld({ hb });
+  t.after(() => world.app.stop());
+  const offered = world.fake.discoveredDevices.length;
+  const services = hb.services;
+  hb.services = [];
+  await world.bridge.refresh();
+  assert.equal(world.bridge.status, 'unreachable');
+  assert.equal(world.fake.discoveredDevices.length, offered);
+  hb.services = services;
+  await until(() => world.bridge.status === 'online', { what: 'online again' });
+});
+
+test('a silent socket is dropped at once and the list read without waiting', async (t) => {
+  let now = Date.now();
+  const world = await createWorld({ timings: { ...FAST_TIMINGS, streamSilence: 1000 } });
+  t.after(() => world.app.stop());
+  world.bridge.now = () => now;
+  world.bridge.stream.close = () => {}; // a dead host: the close never completes
+  now += 5000;
+  await world.bridge.tick(world.bridge.generation);
+  assert.equal(world.bridge.live, false);
+  assert.equal(world.bridge.stream, undefined);
 });

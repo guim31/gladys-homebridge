@@ -273,3 +273,10 @@ accessoires factices se pilotent côté Homebridge par le webhook de homebridge-
   `<iid du service>-<rôle>` ; boutons et systèmes de sécurité = déclencheurs (et action `set_alarm`), pas
   d'appareil ; serrures, portes de garage / motorisées et alarmes non pilotables sauf option par famille, y compris par
   `set_characteristic`.
+- Relecture (22/10) : la liste entière se reconnaît au service `ProtocolInformation` (sans `ev`), **pas à l'aid 1** :
+  un accessoire non ponté (sonnette vidéo) a aussi l'aid 1. Le socket envoie aussi les services **Matter**
+  (`uniqueId` « matter:… », aid 0) absents de `GET /api/accessories` : les ignorer, sinon relecture en boucle. Pendant
+  un redémarrage de Homebridge, l'UI répond **200 `[]`** (erreur avalée) : traité comme une perte. Fermer un socket vers
+  un hôte mort peut attendre l'abandon TCP : le chien de garde détache le socket avant de le fermer.
+- Vérifié dans le conteneur verrouillé contre le vrai Homebridge : utilisateur **non administrateur** suffisant (liste,
+  PUT, socket, `/api/status/homebridge-version`), 16 Mio au repos sans Gladys.

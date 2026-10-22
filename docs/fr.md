@@ -183,6 +183,11 @@ bouton **Relire** qui relit la liste des accessoires.
   l'identifiant d'un pont) donne de nouveaux identifiants : les appareils sont à
   ajouter de nouveau. Renommer un accessoire, non.
 - Les noms des fonctionnalités sont figés à l'ajout de l'appareil dans Gladys.
+- Les interrupteurs de sécurité reconnaissent serrures, portes de garage,
+  portes motorisées et alarmes par leur type HomeKit : un portail ou une gâche
+  qu'un plugin expose comme simple interrupteur reste un interrupteur ordinaire.
+  Écartez-le (**Accessoires à écarter** le retire de l'onglet Découverte ;
+  l'action de scène peut toujours l'atteindre par son nom).
 
 ## Confidentialité
 

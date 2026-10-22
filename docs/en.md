@@ -171,6 +171,11 @@ the accessory list again.
   gives new identifiers: the devices must be added again. Renaming an
   accessory does not.
 - The names of features are fixed when the device is added in Gladys.
+- The security switches know locks, garage doors, motorised doors and alarms by
+  their HomeKit type: a gate or a strike that a plugin exposes as a plain
+  switch is an ordinary switch. Leave it out (**Accessories to leave out**
+  hides it from the Discovery tab; the scene action can still reach it by
+  name).
 
 ## Privacy
 

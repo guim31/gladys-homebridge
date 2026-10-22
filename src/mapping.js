@@ -427,13 +427,15 @@ function heaterCooler(service) {
         const type = thresholdOf(s);
         return type ? numberOf(s, type) : null;
       },
-      write: (v, s) => {
-        const type = thresholdOf(s);
-        if (!type || !writable(s, type)) {
-          throw new WriteError('unsupported_value');
-        }
-        return boundedWrite(s, type)(v);
-      },
+      write: !(heat?.canWrite || cool?.canWrite)
+        ? undefined
+        : (v, s) => {
+            const type = thresholdOf(s);
+            if (!type || !writable(s, type)) {
+              throw new WriteError('unsupported_value');
+            }
+            return boundedWrite(s, type)(v);
+          },
     });
   }
   return features;

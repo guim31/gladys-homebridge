@@ -88,6 +88,22 @@ const structureOf = (services) =>
     ]),
   );
 
+/** A HomeKit service of GET /api/accessories, not a Matter one of the socket. */
+const isHap = (service) =>
+  Number.isFinite(service?.aid) && service.aid > 0 && !service.uniqueId.startsWith('matter:');
+
+/**
+ * While Homebridge restarts, the UI stays up and answers an empty list (its
+ * HAP client fails, the error is swallowed): taken as a loss, not as "no more
+ * accessories", which would empty the Discovery tab.
+ */
+function notEmptied(services, previous) {
+  if (services.length === 0 && previous.size > 0) {
+    throw new Error('empty accessory list (Homebridge restarting?)');
+  }
+  return services;
+}
+
 /** The characteristic types of a service, to tell a value change from a new structure. */
 const shapeOf = (service) =>
   (service?.serviceCharacteristics ?? [])
@@ -389,17 +405,20 @@ export class Bridge {
         this.requestWidgetRefresh();
       }
     }
-    // The whole list (at the opening, after a reload) holds the bridge accessory
-    // itself (aid 1); a change holds the changed services only. A button press is
-    // a change: the value of a whole list is an old press.
-    const whole = event.services.some((s) => s?.aid === 1);
+    // The whole list (at the opening, after a reload) holds the ProtocolInformation
+    // service of each bridge, which has no events: a change never does. A button
+    // press is a change: the value of a whole list is an old press. (Not aid 1:
+    // an unbridged accessory, a video doorbell often, has aid 1 too.)
+    const whole = event.services.some((s) => s?.type === 'ProtocolInformation');
     this.onServices(event.services, { presses: !whole });
   }
 
   /** Values of some services, from the socket or a command answer. */
   onServices(services, { presses = false } = {}) {
     for (const service of services) {
-      if (typeof service?.uniqueId !== 'string') {
+      // Matter services (uniqueId "matter:…", aid 0) come over the socket but are never
+      // in GET /api/accessories: unknown each time, they would make the list read again.
+      if (typeof service?.uniqueId !== 'string' || !isHap(service)) {
         continue;
       }
       const previous = this.services.get(service.uniqueId);
@@ -424,8 +443,12 @@ export class Bridge {
     const now = this.now();
     if (this.live && now - this.lastEventAt > this.timings.streamSilence) {
       this.logger.debug('Homebridge socket silent: reopened');
-      // Its end calls onStreamDown, which opens it again.
-      this.stream?.close();
+      // Detached first: closing a socket to a dead host may only end when TCP gives up.
+      const stream = this.stream;
+      this.stream = undefined;
+      this.live = false;
+      stream?.close();
+      this.onStreamDown(generation, 'socket silent');
     }
     if (!this.live || now - this.lastRefreshAt >= this.timings.refreshInterval) {
       await this.refresh(generation);
@@ -440,7 +463,7 @@ export class Bridge {
     }
     let services;
     try {
-      services = await this.client.getAccessories();
+      services = notEmptied(await this.client.getAccessories(), this.services);
     } catch (err) {
       if (generation === this.generation && this.status === 'online') {
         await this.onFailure(generation, err);
@@ -642,16 +665,20 @@ export class Bridge {
       throw this.error('offline');
     }
     let answer;
-    for (const { type, value } of writes) {
-      try {
-        answer = await this.client.setCharacteristic(uniqueId, type, value);
-      } catch (err) {
-        throw this.translate(err);
+    try {
+      for (const { type, value } of writes) {
+        try {
+          answer = await this.client.setCharacteristic(uniqueId, type, value);
+        } catch (err) {
+          throw this.translate(err);
+        }
       }
-    }
-    // The answer is the service read back: the feedback, without waiting for the socket.
-    if (answer && answer.uniqueId === uniqueId) {
-      this.onServices([answer]);
+    } finally {
+      // The answer is the service read back: the feedback, without waiting for the
+      // socket, even when a later write of the same command failed.
+      if (answer && answer.uniqueId === uniqueId) {
+        this.onServices([answer]);
+      }
     }
   }
 

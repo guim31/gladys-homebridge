@@ -181,6 +181,11 @@ botón **Recargar** que vuelve a leer la lista de accesorios.
   de un puente) da nuevos identificadores: hay que volver a añadir los
   dispositivos. Renombrar un accesorio, no.
 - Los nombres de las funciones se fijan al añadir el dispositivo en Gladys.
+- Los interruptores de seguridad reconocen cerraduras, puertas de garaje,
+  puertas motorizadas y alarmas por su tipo HomeKit: un portón o un cerrojo que
+  un plugin expone como simple interruptor sigue siendo un interruptor
+  corriente. Exclúyalo (**Accesorios a excluir** lo quita de la pestaña
+  Descubrir; la acción de escena aún puede alcanzarlo por su nombre).
 
 ## Privacidad
 

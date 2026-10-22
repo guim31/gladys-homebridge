@@ -180,6 +180,11 @@ angebotenen und hinzugefügten Geräte, die verfolgten Dienste und einen Knopf
   Bridge-Benutzername) ergibt neue Kennungen: Die Geräte müssen neu hinzugefügt
   werden. Ein Umbenennen des Zubehörs nicht.
 - Die Funktionsnamen werden beim Hinzufügen des Geräts in Gladys festgelegt.
+- Die Sicherheitsschalter erkennen Schlösser, Garagentore, motorisierte Türen
+  und Alarmanlagen an ihrem HomeKit-Typ: Ein Tor oder ein Türöffner, den ein
+  Plugin als einfachen Schalter anbietet, bleibt ein gewöhnlicher Schalter.
+  Lass ihn aus (**Auszulassendes Zubehör** nimmt ihn aus dem Reiter Entdecken;
+  die Szenenaktion erreicht ihn weiter über seinen Namen).
 
 ## Datenschutz
 
