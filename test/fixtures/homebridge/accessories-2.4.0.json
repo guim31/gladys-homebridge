@@ -1,0 +1,1541 @@
+[
+  {
+    "aid": 1,
+    "iid": 2000000008,
+    "uuid": "000000A2-0000-1000-8000-0026BB765291",
+    "type": "ProtocolInformation",
+    "humanType": "Protocol Information",
+    "serviceName": "Homebridge Test 669A",
+    "serviceCharacteristics": [
+      {
+        "aid": 1,
+        "iid": 9,
+        "uuid": "00000037-0000-1000-8000-0026BB765291",
+        "type": "Version",
+        "serviceType": "ProtocolInformation",
+        "serviceName": "Homebridge Test 669A",
+        "description": "Version",
+        "value": "1.1.0",
+        "format": "string",
+        "perms": ["pr"],
+        "canRead": true,
+        "canWrite": false,
+        "ev": false
+      }
+    ],
+    "accessoryInformation": {
+      "Manufacturer": "homebridge.io",
+      "Model": "homebridge",
+      "Name": "Homebridge Test 669A",
+      "Serial Number": "0E:00:00:00:00:01",
+      "Firmware Revision": "2.4.0"
+    },
+    "values": {
+      "Version": "1.1.0"
+    },
+    "instance": {
+      "name": "homebridge",
+      "username": "0E:00:00:00:00:01",
+      "ipAddress": "192.0.2.10",
+      "port": 51826,
+      "services": [],
+      "connectionFailedCount": 0,
+      "configurationNumber": "3",
+      "pinRefusalLogged": false
+    },
+    "uniqueId": "9640f9e0b503f30239df252244ace4fb6cd9122fbd5598f6a3aa605a27b5eb09",
+    "nameBasedUniqueId": "75026d6f0d4f4d07b8e8fdbc7c45619cc0399888e45818aea6a9f38f45f98f7c"
+  },
+  {
+    "aid": 2,
+    "iid": 9,
+    "uuid": "00000043-0000-1000-8000-0026BB765291",
+    "type": "Lightbulb",
+    "humanType": "Lightbulb",
+    "serviceName": "Ceiling lamp",
+    "serviceCharacteristics": [
+      {
+        "aid": 2,
+        "iid": 10,
+        "uuid": "00000025-0000-1000-8000-0026BB765291",
+        "type": "On",
+        "serviceType": "Lightbulb",
+        "serviceName": "Ceiling lamp",
+        "description": "On",
+        "value": 0,
+        "format": "bool",
+        "perms": ["ev", "pr", "pw"],
+        "canRead": true,
+        "canWrite": true,
+        "ev": true
+      },
+      {
+        "aid": 2,
+        "iid": 11,
+        "uuid": "00000008-0000-1000-8000-0026BB765291",
+        "type": "Brightness",
+        "serviceType": "Lightbulb",
+        "serviceName": "Ceiling lamp",
+        "description": "Brightness",
+        "value": 100,
+        "format": "int",
+        "perms": ["ev", "pr", "pw"],
+        "unit": "percentage",
+        "maxValue": 100,
+        "minValue": 0,
+        "minStep": 1,
+        "canRead": true,
+        "canWrite": true,
+        "ev": true
+      }
+    ],
+    "accessoryInformation": {
+      "Manufacturer": "Homebridge Dummy",
+      "Model": "Lightbulb",
+      "Name": "Ceiling lamp",
+      "Serial Number": "lamp",
+      "Firmware Revision": "2.1.3",
+      "Configured Name": "Ceiling lamp"
+    },
+    "values": {
+      "On": 0,
+      "Brightness": 100
+    },
+    "instance": {
+      "name": "homebridge",
+      "username": "0E:00:00:00:00:01",
+      "ipAddress": "192.0.2.10",
+      "port": 51826,
+      "services": [],
+      "connectionFailedCount": 0,
+      "configurationNumber": "3",
+      "pinRefusalLogged": false
+    },
+    "uniqueId": "b3671ed4f630b04ee4bd8bdfd08b2ac92c76edcbedca2c526e3b3fd8fdad8b5e",
+    "nameBasedUniqueId": "313880e5ed75842b3004b80a49fdc69a5c630a3451cf62b8135d6468bc969f2a"
+  },
+  {
+    "aid": 3,
+    "iid": 9,
+    "uuid": "00000049-0000-1000-8000-0026BB765291",
+    "type": "Switch",
+    "humanType": "Switch",
+    "serviceName": "Coffee machine",
+    "serviceCharacteristics": [
+      {
+        "aid": 3,
+        "iid": 10,
+        "uuid": "00000025-0000-1000-8000-0026BB765291",
+        "type": "On",
+        "serviceType": "Switch",
+        "serviceName": "Coffee machine",
+        "description": "On",
+        "value": 0,
+        "format": "bool",
+        "perms": ["ev", "pr", "pw"],
+        "canRead": true,
+        "canWrite": true,
+        "ev": true
+      }
+    ],
+    "accessoryInformation": {
+      "Manufacturer": "Homebridge Dummy",
+      "Model": "Switch",
+      "Name": "Coffee machine",
+      "Serial Number": "switch",
+      "Firmware Revision": "2.1.3",
+      "Configured Name": "Coffee machine"
+    },
+    "values": {
+      "On": 0
+    },
+    "instance": {
+      "name": "homebridge",
+      "username": "0E:00:00:00:00:01",
+      "ipAddress": "192.0.2.10",
+      "port": 51826,
+      "services": [],
+      "connectionFailedCount": 0,
+      "configurationNumber": "3",
+      "pinRefusalLogged": false
+    },
+    "uniqueId": "3137e43987776c206d6e86cf059536bf8620f6395fa1541d12cbc2db38452f3b",
+    "nameBasedUniqueId": "35ee720993551649291784aa22fc697b8db280798256b824e83a7853965a265b"
+  },
+  {
+    "aid": 4,
+    "iid": 9,
+    "uuid": "00000047-0000-1000-8000-0026BB765291",
+    "type": "Outlet",
+    "humanType": "Outlet",
+    "serviceName": "Desk plug",
+    "serviceCharacteristics": [
+      {
+        "aid": 4,
+        "iid": 10,
+        "uuid": "00000025-0000-1000-8000-0026BB765291",
+        "type": "On",
+        "serviceType": "Outlet",
+        "serviceName": "Desk plug",
+        "description": "On",
+        "value": 0,
+        "format": "bool",
+        "perms": ["ev", "pr", "pw"],
+        "canRead": true,
+        "canWrite": true,
+        "ev": true
+      }
+    ],
+    "accessoryInformation": {
+      "Manufacturer": "Homebridge Dummy",
+      "Model": "Outlet",
+      "Name": "Desk plug",
+      "Serial Number": "outlet",
+      "Firmware Revision": "2.1.3",
+      "Configured Name": "Desk plug"
+    },
+    "values": {
+      "On": 0
+    },
+    "instance": {
+      "name": "homebridge",
+      "username": "0E:00:00:00:00:01",
+      "ipAddress": "192.0.2.10",
+      "port": 51826,
+      "services": [],
+      "connectionFailedCount": 0,
+      "configurationNumber": "3",
+      "pinRefusalLogged": false
+    },
+    "uniqueId": "9ca2651f4bb12e6edf06b502915029db702b476f5d55c6c6dc944dba6c9b5530",
+    "nameBasedUniqueId": "a9aea626b5a445688f088616555857eedf9e5d5aaf6de6af817299a1830d7ca2"
+  },
+  {
+    "aid": 5,
+    "iid": 9,
+    "uuid": "0000008A-0000-1000-8000-0026BB765291",
+    "type": "TemperatureSensor",
+    "humanType": "Temperature Sensor",
+    "serviceName": "Living temperature",
+    "serviceCharacteristics": [
+      {
+        "aid": 5,
+        "iid": 10,
+        "uuid": "00000011-0000-1000-8000-0026BB765291",
+        "type": "CurrentTemperature",
+        "serviceType": "TemperatureSensor",
+        "serviceName": "Living temperature",
+        "description": "Current Temperature",
+        "value": 0,
+        "format": "float",
+        "perms": ["ev", "pr"],
+        "unit": "celsius",
+        "maxValue": 100,
+        "minValue": -270,
+        "minStep": 0.1,
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      }
+    ],
+    "accessoryInformation": {
+      "Manufacturer": "Homebridge Dummy",
+      "Model": "TemperatureSensor",
+      "Name": "Living temperature",
+      "Serial Number": "temp",
+      "Firmware Revision": "2.1.3",
+      "Configured Name": "Living temperature"
+    },
+    "values": {
+      "CurrentTemperature": 0
+    },
+    "instance": {
+      "name": "homebridge",
+      "username": "0E:00:00:00:00:01",
+      "ipAddress": "192.0.2.10",
+      "port": 51826,
+      "services": [],
+      "connectionFailedCount": 0,
+      "configurationNumber": "3",
+      "pinRefusalLogged": false
+    },
+    "uniqueId": "0d801ada63ccc5d818793fab98baa408249f72df1d3c42c8dd83cba2ddf9cabe",
+    "nameBasedUniqueId": "a78ead6f4d94496dc57133608260c2b7b2f83d581e605760411a41bdbdd40946"
+  },
+  {
+    "aid": 6,
+    "iid": 9,
+    "uuid": "00000082-0000-1000-8000-0026BB765291",
+    "type": "HumiditySensor",
+    "humanType": "Humidity Sensor",
+    "serviceName": "Bathroom humidity",
+    "serviceCharacteristics": [
+      {
+        "aid": 6,
+        "iid": 10,
+        "uuid": "00000010-0000-1000-8000-0026BB765291",
+        "type": "CurrentRelativeHumidity",
+        "serviceType": "HumiditySensor",
+        "serviceName": "Bathroom humidity",
+        "description": "Current Relative Humidity",
+        "value": 0,
+        "format": "float",
+        "perms": ["ev", "pr"],
+        "unit": "percentage",
+        "maxValue": 100,
+        "minValue": 0,
+        "minStep": 1,
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      }
+    ],
+    "accessoryInformation": {
+      "Manufacturer": "Homebridge Dummy",
+      "Model": "HumiditySensor",
+      "Name": "Bathroom humidity",
+      "Serial Number": "hum",
+      "Firmware Revision": "2.1.3",
+      "Configured Name": "Bathroom humidity"
+    },
+    "values": {
+      "CurrentRelativeHumidity": 0
+    },
+    "instance": {
+      "name": "homebridge",
+      "username": "0E:00:00:00:00:01",
+      "ipAddress": "192.0.2.10",
+      "port": 51826,
+      "services": [],
+      "connectionFailedCount": 0,
+      "configurationNumber": "3",
+      "pinRefusalLogged": false
+    },
+    "uniqueId": "b8e7c1b32c5e98cd039bb30b65486f308a72aa668b140ea2dd7faa8616edbe2c",
+    "nameBasedUniqueId": "ec61b88323c02e6d6acba8a7ac0c192b3df89aa7f0774872228eda62dda0477e"
+  },
+  {
+    "aid": 7,
+    "iid": 9,
+    "uuid": "00000085-0000-1000-8000-0026BB765291",
+    "type": "MotionSensor",
+    "humanType": "Motion Sensor",
+    "serviceName": "Hall motion",
+    "serviceCharacteristics": [
+      {
+        "aid": 7,
+        "iid": 10,
+        "uuid": "00000022-0000-1000-8000-0026BB765291",
+        "type": "MotionDetected",
+        "serviceType": "MotionSensor",
+        "serviceName": "Hall motion",
+        "description": "Motion Detected",
+        "value": 0,
+        "format": "bool",
+        "perms": ["ev", "pr"],
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      }
+    ],
+    "accessoryInformation": {
+      "Manufacturer": "Homebridge Dummy",
+      "Model": "MotionSensor",
+      "Name": "Hall motion",
+      "Serial Number": "motion",
+      "Firmware Revision": "2.1.3",
+      "Configured Name": "Hall motion"
+    },
+    "values": {
+      "MotionDetected": 0
+    },
+    "instance": {
+      "name": "homebridge",
+      "username": "0E:00:00:00:00:01",
+      "ipAddress": "192.0.2.10",
+      "port": 51826,
+      "services": [],
+      "connectionFailedCount": 0,
+      "configurationNumber": "3",
+      "pinRefusalLogged": false
+    },
+    "uniqueId": "3b62da6cd515b877e7bd6939fbaa2b101fe10be295a7d81699529fd212f12a44",
+    "nameBasedUniqueId": "2e4b91618e92177de6cc66f327a96ad0adeb3b77420d45b61d225d061aa4adf1"
+  },
+  {
+    "aid": 8,
+    "iid": 9,
+    "uuid": "00000080-0000-1000-8000-0026BB765291",
+    "type": "ContactSensor",
+    "humanType": "Contact Sensor",
+    "serviceName": "Front window",
+    "serviceCharacteristics": [
+      {
+        "aid": 8,
+        "iid": 10,
+        "uuid": "0000006A-0000-1000-8000-0026BB765291",
+        "type": "ContactSensorState",
+        "serviceType": "ContactSensor",
+        "serviceName": "Front window",
+        "description": "Contact Sensor State",
+        "value": 0,
+        "format": "uint8",
+        "perms": ["ev", "pr"],
+        "maxValue": 1,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1],
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      }
+    ],
+    "accessoryInformation": {
+      "Manufacturer": "Homebridge Dummy",
+      "Model": "ContactSensor",
+      "Name": "Front window",
+      "Serial Number": "contact",
+      "Firmware Revision": "2.1.3",
+      "Configured Name": "Front window"
+    },
+    "values": {
+      "ContactSensorState": 0
+    },
+    "instance": {
+      "name": "homebridge",
+      "username": "0E:00:00:00:00:01",
+      "ipAddress": "192.0.2.10",
+      "port": 51826,
+      "services": [],
+      "connectionFailedCount": 0,
+      "configurationNumber": "3",
+      "pinRefusalLogged": false
+    },
+    "uniqueId": "1b14ce147f0e62ce070a7a7088c6b17aa9724579ec824d30552fc57178373c0a",
+    "nameBasedUniqueId": "1f73123f2f219a8e394ba2ff9c5315a7841ac893dffb026e8438b4f8c7c4a35e"
+  },
+  {
+    "aid": 9,
+    "iid": 9,
+    "uuid": "00000083-0000-1000-8000-0026BB765291",
+    "type": "LeakSensor",
+    "humanType": "Leak Sensor",
+    "serviceName": "Washer leak",
+    "serviceCharacteristics": [
+      {
+        "aid": 9,
+        "iid": 10,
+        "uuid": "00000070-0000-1000-8000-0026BB765291",
+        "type": "LeakDetected",
+        "serviceType": "LeakSensor",
+        "serviceName": "Washer leak",
+        "description": "Leak Detected",
+        "value": 0,
+        "format": "uint8",
+        "perms": ["ev", "pr"],
+        "maxValue": 1,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1],
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      }
+    ],
+    "accessoryInformation": {
+      "Manufacturer": "Homebridge Dummy",
+      "Model": "LeakSensor",
+      "Name": "Washer leak",
+      "Serial Number": "leak",
+      "Firmware Revision": "2.1.3",
+      "Configured Name": "Washer leak"
+    },
+    "values": {
+      "LeakDetected": 0
+    },
+    "instance": {
+      "name": "homebridge",
+      "username": "0E:00:00:00:00:01",
+      "ipAddress": "192.0.2.10",
+      "port": 51826,
+      "services": [],
+      "connectionFailedCount": 0,
+      "configurationNumber": "3",
+      "pinRefusalLogged": false
+    },
+    "uniqueId": "2d9774022b72a11f5c9452f55b3a14727a1785ee8497dba65f2bd76060ecbacd",
+    "nameBasedUniqueId": "27aa8273e36c328aa1024275c20f8f332f0a8029f3c6a9642e1a2bfee926f563"
+  },
+  {
+    "aid": 10,
+    "iid": 9,
+    "uuid": "00000087-0000-1000-8000-0026BB765291",
+    "type": "SmokeSensor",
+    "humanType": "Smoke Sensor",
+    "serviceName": "Kitchen smoke",
+    "serviceCharacteristics": [
+      {
+        "aid": 10,
+        "iid": 10,
+        "uuid": "00000076-0000-1000-8000-0026BB765291",
+        "type": "SmokeDetected",
+        "serviceType": "SmokeSensor",
+        "serviceName": "Kitchen smoke",
+        "description": "Smoke Detected",
+        "value": 0,
+        "format": "uint8",
+        "perms": ["ev", "pr"],
+        "maxValue": 1,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1],
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      }
+    ],
+    "accessoryInformation": {
+      "Manufacturer": "Homebridge Dummy",
+      "Model": "SmokeSensor",
+      "Name": "Kitchen smoke",
+      "Serial Number": "smoke",
+      "Firmware Revision": "2.1.3",
+      "Configured Name": "Kitchen smoke"
+    },
+    "values": {
+      "SmokeDetected": 0
+    },
+    "instance": {
+      "name": "homebridge",
+      "username": "0E:00:00:00:00:01",
+      "ipAddress": "192.0.2.10",
+      "port": 51826,
+      "services": [],
+      "connectionFailedCount": 0,
+      "configurationNumber": "3",
+      "pinRefusalLogged": false
+    },
+    "uniqueId": "a922a02a36d4d5f1d82604190353adf5737c0a3eac8167aacb19f175c93256d7",
+    "nameBasedUniqueId": "e461c82cf51912742ca07c4d854785e643ed352f0444e4a55e8e4b24713b95db"
+  },
+  {
+    "aid": 11,
+    "iid": 9,
+    "uuid": "0000007F-0000-1000-8000-0026BB765291",
+    "type": "CarbonMonoxideSensor",
+    "humanType": "Carbon Monoxide Sensor",
+    "serviceName": "Boiler CO",
+    "serviceCharacteristics": [
+      {
+        "aid": 11,
+        "iid": 10,
+        "uuid": "00000069-0000-1000-8000-0026BB765291",
+        "type": "CarbonMonoxideDetected",
+        "serviceType": "CarbonMonoxideSensor",
+        "serviceName": "Boiler CO",
+        "description": "Carbon Monoxide Detected",
+        "value": 0,
+        "format": "uint8",
+        "perms": ["ev", "pr"],
+        "maxValue": 1,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1],
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      }
+    ],
+    "accessoryInformation": {
+      "Manufacturer": "Homebridge Dummy",
+      "Model": "CarbonMonoxideSensor",
+      "Name": "Boiler CO",
+      "Serial Number": "co",
+      "Firmware Revision": "2.1.3",
+      "Configured Name": "Boiler CO"
+    },
+    "values": {
+      "CarbonMonoxideDetected": 0
+    },
+    "instance": {
+      "name": "homebridge",
+      "username": "0E:00:00:00:00:01",
+      "ipAddress": "192.0.2.10",
+      "port": 51826,
+      "services": [],
+      "connectionFailedCount": 0,
+      "configurationNumber": "3",
+      "pinRefusalLogged": false
+    },
+    "uniqueId": "540ee2b6d82b607929885250d1764251a54d74c08265812e170934dd9c00a84d",
+    "nameBasedUniqueId": "95b425c62773ad7747456d609f084fed023d18480817362ffc708d2399d56890"
+  },
+  {
+    "aid": 12,
+    "iid": 9,
+    "uuid": "00000097-0000-1000-8000-0026BB765291",
+    "type": "CarbonDioxideSensor",
+    "humanType": "Carbon Dioxide Sensor",
+    "serviceName": "Office CO2",
+    "serviceCharacteristics": [
+      {
+        "aid": 12,
+        "iid": 10,
+        "uuid": "00000092-0000-1000-8000-0026BB765291",
+        "type": "CarbonDioxideDetected",
+        "serviceType": "CarbonDioxideSensor",
+        "serviceName": "Office CO2",
+        "description": "Carbon Dioxide Detected",
+        "value": 0,
+        "format": "uint8",
+        "perms": ["ev", "pr"],
+        "maxValue": 1,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1],
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      }
+    ],
+    "accessoryInformation": {
+      "Manufacturer": "Homebridge Dummy",
+      "Model": "CarbonDioxideSensor",
+      "Name": "Office CO2",
+      "Serial Number": "co2",
+      "Firmware Revision": "2.1.3",
+      "Configured Name": "Office CO2"
+    },
+    "values": {
+      "CarbonDioxideDetected": 0
+    },
+    "instance": {
+      "name": "homebridge",
+      "username": "0E:00:00:00:00:01",
+      "ipAddress": "192.0.2.10",
+      "port": 51826,
+      "services": [],
+      "connectionFailedCount": 0,
+      "configurationNumber": "3",
+      "pinRefusalLogged": false
+    },
+    "uniqueId": "4ae4a6088a8591a2969f57c877a4f6005d45857c304fb258645c934d56a13b7c",
+    "nameBasedUniqueId": "9ebaddf5b44b99c9c1df1c1011c885827cb88d1490a14035c751c0af68100476"
+  },
+  {
+    "aid": 13,
+    "iid": 9,
+    "uuid": "00000086-0000-1000-8000-0026BB765291",
+    "type": "OccupancySensor",
+    "humanType": "Occupancy Sensor",
+    "serviceName": "Office presence",
+    "serviceCharacteristics": [
+      {
+        "aid": 13,
+        "iid": 10,
+        "uuid": "00000071-0000-1000-8000-0026BB765291",
+        "type": "OccupancyDetected",
+        "serviceType": "OccupancySensor",
+        "serviceName": "Office presence",
+        "description": "Occupancy Detected",
+        "value": 0,
+        "format": "uint8",
+        "perms": ["ev", "pr"],
+        "maxValue": 1,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1],
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      }
+    ],
+    "accessoryInformation": {
+      "Manufacturer": "Homebridge Dummy",
+      "Model": "OccupancySensor",
+      "Name": "Office presence",
+      "Serial Number": "occupancy",
+      "Firmware Revision": "2.1.3",
+      "Configured Name": "Office presence"
+    },
+    "values": {
+      "OccupancyDetected": 0
+    },
+    "instance": {
+      "name": "homebridge",
+      "username": "0E:00:00:00:00:01",
+      "ipAddress": "192.0.2.10",
+      "port": 51826,
+      "services": [],
+      "connectionFailedCount": 0,
+      "configurationNumber": "3",
+      "pinRefusalLogged": false
+    },
+    "uniqueId": "91ae35081584031dc25c7f7cf06e5f2a5481f4dea07c4c9e39f7a7c854608deb",
+    "nameBasedUniqueId": "b4958e1ae8b98835d5a60acfc82dc29cb35c1830a04d37575f3d2b59d864eabc"
+  },
+  {
+    "aid": 14,
+    "iid": 9,
+    "uuid": "0000004A-0000-1000-8000-0026BB765291",
+    "type": "Thermostat",
+    "humanType": "Thermostat",
+    "serviceName": "Living thermostat",
+    "serviceCharacteristics": [
+      {
+        "aid": 14,
+        "iid": 10,
+        "uuid": "0000000F-0000-1000-8000-0026BB765291",
+        "type": "CurrentHeatingCoolingState",
+        "serviceType": "Thermostat",
+        "serviceName": "Living thermostat",
+        "description": "Current Heating Cooling State",
+        "value": 0,
+        "format": "uint8",
+        "perms": ["ev", "pr"],
+        "maxValue": 2,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1, 2],
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      },
+      {
+        "aid": 14,
+        "iid": 11,
+        "uuid": "00000033-0000-1000-8000-0026BB765291",
+        "type": "TargetHeatingCoolingState",
+        "serviceType": "Thermostat",
+        "serviceName": "Living thermostat",
+        "description": "Target Heating Cooling State",
+        "value": 0,
+        "format": "uint8",
+        "perms": ["ev", "pr", "pw"],
+        "maxValue": 3,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1, 2, 3],
+        "canRead": true,
+        "canWrite": true,
+        "ev": true
+      },
+      {
+        "aid": 14,
+        "iid": 12,
+        "uuid": "00000011-0000-1000-8000-0026BB765291",
+        "type": "CurrentTemperature",
+        "serviceType": "Thermostat",
+        "serviceName": "Living thermostat",
+        "description": "Current Temperature",
+        "value": 20,
+        "format": "float",
+        "perms": ["ev", "pr"],
+        "unit": "celsius",
+        "maxValue": 38,
+        "minValue": 10,
+        "minStep": 0.1,
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      },
+      {
+        "aid": 14,
+        "iid": 13,
+        "uuid": "00000035-0000-1000-8000-0026BB765291",
+        "type": "TargetTemperature",
+        "serviceType": "Thermostat",
+        "serviceName": "Living thermostat",
+        "description": "Target Temperature",
+        "value": 20,
+        "format": "float",
+        "perms": ["ev", "pr", "pw"],
+        "unit": "celsius",
+        "maxValue": 38,
+        "minValue": 10,
+        "minStep": 0.1,
+        "canRead": true,
+        "canWrite": true,
+        "ev": true
+      },
+      {
+        "aid": 14,
+        "iid": 14,
+        "uuid": "00000036-0000-1000-8000-0026BB765291",
+        "type": "TemperatureDisplayUnits",
+        "serviceType": "Thermostat",
+        "serviceName": "Living thermostat",
+        "description": "Temperature Display Units",
+        "value": 0,
+        "format": "uint8",
+        "perms": ["ev", "pr", "pw"],
+        "maxValue": 1,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1],
+        "canRead": true,
+        "canWrite": true,
+        "ev": true
+      }
+    ],
+    "accessoryInformation": {
+      "Manufacturer": "Homebridge Dummy",
+      "Model": "Thermostat",
+      "Name": "Living thermostat",
+      "Serial Number": "thermo",
+      "Firmware Revision": "2.1.3",
+      "Configured Name": "Living thermostat"
+    },
+    "values": {
+      "CurrentHeatingCoolingState": 0,
+      "TargetHeatingCoolingState": 0,
+      "CurrentTemperature": 20,
+      "TargetTemperature": 20,
+      "TemperatureDisplayUnits": 0
+    },
+    "instance": {
+      "name": "homebridge",
+      "username": "0E:00:00:00:00:01",
+      "ipAddress": "192.0.2.10",
+      "port": 51826,
+      "services": [],
+      "connectionFailedCount": 0,
+      "configurationNumber": "3",
+      "pinRefusalLogged": false
+    },
+    "uniqueId": "4a45c9628dcbf014f6dc6c6316fff1676714eb6f9f09909d8cb3394027d03f73",
+    "nameBasedUniqueId": "76e29b94c373651741a5c7f57a02395d071596fbc8f36755b64c24cae4cf784b"
+  },
+  {
+    "aid": 15,
+    "iid": 9,
+    "uuid": "0000008C-0000-1000-8000-0026BB765291",
+    "type": "WindowCovering",
+    "humanType": "Window Covering",
+    "serviceName": "Bedroom blinds",
+    "serviceCharacteristics": [
+      {
+        "aid": 15,
+        "iid": 10,
+        "uuid": "0000006D-0000-1000-8000-0026BB765291",
+        "type": "CurrentPosition",
+        "serviceType": "WindowCovering",
+        "serviceName": "Bedroom blinds",
+        "description": "Current Position",
+        "value": 0,
+        "format": "uint8",
+        "perms": ["ev", "pr"],
+        "unit": "percentage",
+        "maxValue": 100,
+        "minValue": 0,
+        "minStep": 1,
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      },
+      {
+        "aid": 15,
+        "iid": 11,
+        "uuid": "00000072-0000-1000-8000-0026BB765291",
+        "type": "PositionState",
+        "serviceType": "WindowCovering",
+        "serviceName": "Bedroom blinds",
+        "description": "Position State",
+        "value": 2,
+        "format": "uint8",
+        "perms": ["ev", "pr"],
+        "maxValue": 2,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1, 2],
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      },
+      {
+        "aid": 15,
+        "iid": 12,
+        "uuid": "0000007C-0000-1000-8000-0026BB765291",
+        "type": "TargetPosition",
+        "serviceType": "WindowCovering",
+        "serviceName": "Bedroom blinds",
+        "description": "Target Position",
+        "value": 0,
+        "format": "uint8",
+        "perms": ["ev", "pr", "pw"],
+        "unit": "percentage",
+        "maxValue": 100,
+        "minValue": 0,
+        "minStep": 1,
+        "canRead": true,
+        "canWrite": true,
+        "ev": true
+      }
+    ],
+    "accessoryInformation": {
+      "Manufacturer": "Homebridge Dummy",
+      "Model": "WindowCovering",
+      "Name": "Bedroom blinds",
+      "Serial Number": "blinds",
+      "Firmware Revision": "2.1.3",
+      "Configured Name": "Bedroom blinds"
+    },
+    "values": {
+      "CurrentPosition": 0,
+      "PositionState": 2,
+      "TargetPosition": 0
+    },
+    "instance": {
+      "name": "homebridge",
+      "username": "0E:00:00:00:00:01",
+      "ipAddress": "192.0.2.10",
+      "port": 51826,
+      "services": [],
+      "connectionFailedCount": 0,
+      "configurationNumber": "3",
+      "pinRefusalLogged": false
+    },
+    "uniqueId": "a8087bb57ddb7ad41e32aee8101cab2b390621f0aaaecbd3f1ff791ce9690d6b",
+    "nameBasedUniqueId": "1527dfca5a4f6948520b8beb6a2a4c704e286a9a4d54d34297c62aa461608db3"
+  },
+  {
+    "aid": 16,
+    "iid": 9,
+    "uuid": "00000045-0000-1000-8000-0026BB765291",
+    "type": "LockMechanism",
+    "humanType": "Lock Mechanism",
+    "serviceName": "Front door lock",
+    "serviceCharacteristics": [
+      {
+        "aid": 16,
+        "iid": 10,
+        "uuid": "0000001D-0000-1000-8000-0026BB765291",
+        "type": "LockCurrentState",
+        "serviceType": "LockMechanism",
+        "serviceName": "Front door lock",
+        "description": "Lock Current State",
+        "value": 1,
+        "format": "uint8",
+        "perms": ["ev", "pr"],
+        "maxValue": 3,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1, 2, 3],
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      },
+      {
+        "aid": 16,
+        "iid": 11,
+        "uuid": "0000001E-0000-1000-8000-0026BB765291",
+        "type": "LockTargetState",
+        "serviceType": "LockMechanism",
+        "serviceName": "Front door lock",
+        "description": "Lock Target State",
+        "value": 1,
+        "format": "uint8",
+        "perms": ["ev", "pr", "pw"],
+        "maxValue": 1,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1],
+        "canRead": true,
+        "canWrite": true,
+        "ev": true
+      }
+    ],
+    "accessoryInformation": {
+      "Manufacturer": "Homebridge Dummy",
+      "Model": "LockMechanism",
+      "Name": "Front door lock",
+      "Serial Number": "lock",
+      "Firmware Revision": "2.1.3",
+      "Configured Name": "Front door lock"
+    },
+    "values": {
+      "LockCurrentState": 1,
+      "LockTargetState": 1
+    },
+    "instance": {
+      "name": "homebridge",
+      "username": "0E:00:00:00:00:01",
+      "ipAddress": "192.0.2.10",
+      "port": 51826,
+      "services": [],
+      "connectionFailedCount": 0,
+      "configurationNumber": "3",
+      "pinRefusalLogged": false
+    },
+    "uniqueId": "e5c1c174cee1286fc417fae4aa40343dfc353208a4239aca7c989bbbf5376140",
+    "nameBasedUniqueId": "243c2df152f7f0d6f796b1326164487d7cc8e1cf949a9865638e7aa01b7d5415"
+  },
+  {
+    "aid": 17,
+    "iid": 9,
+    "uuid": "00000041-0000-1000-8000-0026BB765291",
+    "type": "GarageDoorOpener",
+    "humanType": "Garage Door Opener",
+    "serviceName": "Garage",
+    "serviceCharacteristics": [
+      {
+        "aid": 17,
+        "iid": 10,
+        "uuid": "0000000E-0000-1000-8000-0026BB765291",
+        "type": "CurrentDoorState",
+        "serviceType": "GarageDoorOpener",
+        "serviceName": "Garage",
+        "description": "Current Door State",
+        "value": 1,
+        "format": "uint8",
+        "perms": ["ev", "pr"],
+        "maxValue": 4,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1, 2, 3, 4],
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      },
+      {
+        "aid": 17,
+        "iid": 11,
+        "uuid": "00000032-0000-1000-8000-0026BB765291",
+        "type": "TargetDoorState",
+        "serviceType": "GarageDoorOpener",
+        "serviceName": "Garage",
+        "description": "Target Door State",
+        "value": 1,
+        "format": "uint8",
+        "perms": ["ev", "pr", "pw"],
+        "maxValue": 1,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1],
+        "canRead": true,
+        "canWrite": true,
+        "ev": true
+      },
+      {
+        "aid": 17,
+        "iid": 12,
+        "uuid": "00000024-0000-1000-8000-0026BB765291",
+        "type": "ObstructionDetected",
+        "serviceType": "GarageDoorOpener",
+        "serviceName": "Garage",
+        "description": "Obstruction Detected",
+        "value": 0,
+        "format": "bool",
+        "perms": ["ev", "pr"],
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      }
+    ],
+    "accessoryInformation": {
+      "Manufacturer": "Homebridge Dummy",
+      "Model": "GarageDoorOpener",
+      "Name": "Garage",
+      "Serial Number": "garage",
+      "Firmware Revision": "2.1.3",
+      "Configured Name": "Garage"
+    },
+    "values": {
+      "CurrentDoorState": 1,
+      "TargetDoorState": 1,
+      "ObstructionDetected": 0
+    },
+    "instance": {
+      "name": "homebridge",
+      "username": "0E:00:00:00:00:01",
+      "ipAddress": "192.0.2.10",
+      "port": 51826,
+      "services": [],
+      "connectionFailedCount": 0,
+      "configurationNumber": "3",
+      "pinRefusalLogged": false
+    },
+    "uniqueId": "9cfab50e85e6758a93a1e9e806625d10ef693de8dbc14812d0e0ab7de596e2e9",
+    "nameBasedUniqueId": "ad4f76d1fec43377925cf98d8db74f0d38a1bbb51f80a67baacfcd88c7603498"
+  },
+  {
+    "aid": 18,
+    "iid": 9,
+    "uuid": "00000081-0000-1000-8000-0026BB765291",
+    "type": "Door",
+    "humanType": "Door",
+    "serviceName": "Patio door",
+    "serviceCharacteristics": [
+      {
+        "aid": 18,
+        "iid": 10,
+        "uuid": "0000006D-0000-1000-8000-0026BB765291",
+        "type": "CurrentPosition",
+        "serviceType": "Door",
+        "serviceName": "Patio door",
+        "description": "Current Position",
+        "value": 0,
+        "format": "uint8",
+        "perms": ["ev", "pr"],
+        "unit": "percentage",
+        "maxValue": 100,
+        "minValue": 0,
+        "minStep": 1,
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      },
+      {
+        "aid": 18,
+        "iid": 11,
+        "uuid": "00000072-0000-1000-8000-0026BB765291",
+        "type": "PositionState",
+        "serviceType": "Door",
+        "serviceName": "Patio door",
+        "description": "Position State",
+        "value": 2,
+        "format": "uint8",
+        "perms": ["ev", "pr"],
+        "maxValue": 2,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1, 2],
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      },
+      {
+        "aid": 18,
+        "iid": 12,
+        "uuid": "0000007C-0000-1000-8000-0026BB765291",
+        "type": "TargetPosition",
+        "serviceType": "Door",
+        "serviceName": "Patio door",
+        "description": "Target Position",
+        "value": 0,
+        "format": "uint8",
+        "perms": ["ev", "pr", "pw"],
+        "unit": "percentage",
+        "maxValue": 100,
+        "minValue": 0,
+        "minStep": 1,
+        "canRead": true,
+        "canWrite": true,
+        "ev": true
+      }
+    ],
+    "accessoryInformation": {
+      "Manufacturer": "Homebridge Dummy",
+      "Model": "Door",
+      "Name": "Patio door",
+      "Serial Number": "door",
+      "Firmware Revision": "2.1.3",
+      "Configured Name": "Patio door"
+    },
+    "values": {
+      "CurrentPosition": 0,
+      "PositionState": 2,
+      "TargetPosition": 0
+    },
+    "instance": {
+      "name": "homebridge",
+      "username": "0E:00:00:00:00:01",
+      "ipAddress": "192.0.2.10",
+      "port": 51826,
+      "services": [],
+      "connectionFailedCount": 0,
+      "configurationNumber": "3",
+      "pinRefusalLogged": false
+    },
+    "uniqueId": "a89b4c8fcbc8f5650739dd8c992c7019e581b004e35123da0901ec546d7f27b4",
+    "nameBasedUniqueId": "a38f9f161abb9b267cc7223fae5b3955b1590296637d8282acc8b0d33323d8d4"
+  },
+  {
+    "aid": 19,
+    "iid": 9,
+    "uuid": "0000008B-0000-1000-8000-0026BB765291",
+    "type": "Window",
+    "humanType": "Window",
+    "serviceName": "Roof window",
+    "serviceCharacteristics": [
+      {
+        "aid": 19,
+        "iid": 10,
+        "uuid": "0000006D-0000-1000-8000-0026BB765291",
+        "type": "CurrentPosition",
+        "serviceType": "Window",
+        "serviceName": "Roof window",
+        "description": "Current Position",
+        "value": 0,
+        "format": "uint8",
+        "perms": ["ev", "pr"],
+        "unit": "percentage",
+        "maxValue": 100,
+        "minValue": 0,
+        "minStep": 1,
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      },
+      {
+        "aid": 19,
+        "iid": 11,
+        "uuid": "00000072-0000-1000-8000-0026BB765291",
+        "type": "PositionState",
+        "serviceType": "Window",
+        "serviceName": "Roof window",
+        "description": "Position State",
+        "value": 2,
+        "format": "uint8",
+        "perms": ["ev", "pr"],
+        "maxValue": 2,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1, 2],
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      },
+      {
+        "aid": 19,
+        "iid": 12,
+        "uuid": "0000007C-0000-1000-8000-0026BB765291",
+        "type": "TargetPosition",
+        "serviceType": "Window",
+        "serviceName": "Roof window",
+        "description": "Target Position",
+        "value": 0,
+        "format": "uint8",
+        "perms": ["ev", "pr", "pw"],
+        "unit": "percentage",
+        "maxValue": 100,
+        "minValue": 0,
+        "minStep": 1,
+        "canRead": true,
+        "canWrite": true,
+        "ev": true
+      }
+    ],
+    "accessoryInformation": {
+      "Manufacturer": "Homebridge Dummy",
+      "Model": "Window",
+      "Name": "Roof window",
+      "Serial Number": "window",
+      "Firmware Revision": "2.1.3",
+      "Configured Name": "Roof window"
+    },
+    "values": {
+      "CurrentPosition": 0,
+      "PositionState": 2,
+      "TargetPosition": 0
+    },
+    "instance": {
+      "name": "homebridge",
+      "username": "0E:00:00:00:00:01",
+      "ipAddress": "192.0.2.10",
+      "port": 51826,
+      "services": [],
+      "connectionFailedCount": 0,
+      "configurationNumber": "3",
+      "pinRefusalLogged": false
+    },
+    "uniqueId": "2b45ad9880a391dbd247d4e43c17e55c640c408708ee0eeeab2c9c5c90616ed0",
+    "nameBasedUniqueId": "7baddc5861abf0154cbb8550ecb043a8a7b5c2dea49929c6a12914f3ebe0d854"
+  },
+  {
+    "aid": 20,
+    "iid": 9,
+    "uuid": "000000D0-0000-1000-8000-0026BB765291",
+    "type": "Valve",
+    "humanType": "Valve",
+    "serviceName": "Garden sprinkler",
+    "serviceCharacteristics": [
+      {
+        "aid": 20,
+        "iid": 10,
+        "uuid": "000000B0-0000-1000-8000-0026BB765291",
+        "type": "Active",
+        "serviceType": "Valve",
+        "serviceName": "Garden sprinkler",
+        "description": "Active",
+        "value": 0,
+        "format": "uint8",
+        "perms": ["ev", "pr", "pw"],
+        "maxValue": 1,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1],
+        "canRead": true,
+        "canWrite": true,
+        "ev": true
+      },
+      {
+        "aid": 20,
+        "iid": 11,
+        "uuid": "000000D2-0000-1000-8000-0026BB765291",
+        "type": "InUse",
+        "serviceType": "Valve",
+        "serviceName": "Garden sprinkler",
+        "description": "In Use",
+        "value": 0,
+        "format": "uint8",
+        "perms": ["ev", "pr"],
+        "maxValue": 1,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1],
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      },
+      {
+        "aid": 20,
+        "iid": 12,
+        "uuid": "000000D5-0000-1000-8000-0026BB765291",
+        "type": "ValveType",
+        "serviceType": "Valve",
+        "serviceName": "Garden sprinkler",
+        "description": "Valve Type",
+        "value": 0,
+        "format": "uint8",
+        "perms": ["ev", "pr"],
+        "maxValue": 3,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1, 2, 3],
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      },
+      {
+        "aid": 20,
+        "iid": 13,
+        "uuid": "000000D6-0000-1000-8000-0026BB765291",
+        "type": "IsConfigured",
+        "serviceType": "Valve",
+        "serviceName": "Garden sprinkler",
+        "description": "Is Configured",
+        "value": 1,
+        "format": "uint8",
+        "perms": ["ev", "pr", "pw"],
+        "maxValue": 1,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1],
+        "canRead": true,
+        "canWrite": true,
+        "ev": true
+      }
+    ],
+    "accessoryInformation": {
+      "Manufacturer": "Homebridge Dummy",
+      "Model": "Valve",
+      "Name": "Garden sprinkler",
+      "Serial Number": "valve",
+      "Firmware Revision": "2.1.3",
+      "Configured Name": "Garden sprinkler"
+    },
+    "values": {
+      "Active": 0,
+      "InUse": 0,
+      "ValveType": 0,
+      "IsConfigured": 1
+    },
+    "instance": {
+      "name": "homebridge",
+      "username": "0E:00:00:00:00:01",
+      "ipAddress": "192.0.2.10",
+      "port": 51826,
+      "services": [],
+      "connectionFailedCount": 0,
+      "configurationNumber": "3",
+      "pinRefusalLogged": false
+    },
+    "uniqueId": "2a44fd7d4e4f39a2f3f241f1a7481899b1c2b482fb0e7ac7dd85f2eebe77b863",
+    "nameBasedUniqueId": "a979e7db37b82f2eab63d8084afea3e75e1a97b35fe365aa76ac9e8520128cff"
+  },
+  {
+    "aid": 21,
+    "iid": 9,
+    "uuid": "00000089-0000-1000-8000-0026BB765291",
+    "type": "StatelessProgrammableSwitch",
+    "humanType": "Stateless Programmable Switch",
+    "serviceName": "Doorbell button",
+    "serviceCharacteristics": [
+      {
+        "aid": 21,
+        "iid": 10,
+        "uuid": "00000073-0000-1000-8000-0026BB765291",
+        "type": "ProgrammableSwitchEvent",
+        "serviceType": "StatelessProgrammableSwitch",
+        "serviceName": "Doorbell button",
+        "description": "Programmable Switch Event",
+        "value": null,
+        "format": "uint8",
+        "perms": ["ev", "pr"],
+        "maxValue": 2,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1, 2],
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      }
+    ],
+    "accessoryInformation": {
+      "Manufacturer": "Homebridge Dummy",
+      "Model": "StatelessProgrammableSwitch",
+      "Name": "Doorbell button",
+      "Serial Number": "button",
+      "Firmware Revision": "2.1.3",
+      "Configured Name": "Doorbell button"
+    },
+    "values": {
+      "ProgrammableSwitchEvent": null
+    },
+    "instance": {
+      "name": "homebridge",
+      "username": "0E:00:00:00:00:01",
+      "ipAddress": "192.0.2.10",
+      "port": 51826,
+      "services": [],
+      "connectionFailedCount": 0,
+      "configurationNumber": "3",
+      "pinRefusalLogged": false
+    },
+    "uniqueId": "f77bf7ede699c61dcccd4e05e4c5ac20dc2c820e32b658228d8e7579016a632c",
+    "nameBasedUniqueId": "0f45ef3caf9a9e87b8cfacc4dd59e10a796fa4e88f9a519038cbe1f224755d16"
+  },
+  {
+    "aid": 22,
+    "iid": 9,
+    "uuid": "000000BD-0000-1000-8000-0026BB765291",
+    "type": "HumidifierDehumidifier",
+    "humanType": "Humidifier Dehumidifier",
+    "serviceName": "Humidifier",
+    "serviceCharacteristics": [
+      {
+        "aid": 22,
+        "iid": 10,
+        "uuid": "000000B0-0000-1000-8000-0026BB765291",
+        "type": "Active",
+        "serviceType": "HumidifierDehumidifier",
+        "serviceName": "Humidifier",
+        "description": "Active",
+        "value": 0,
+        "format": "uint8",
+        "perms": ["ev", "pr", "pw"],
+        "maxValue": 1,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1],
+        "canRead": true,
+        "canWrite": true,
+        "ev": true
+      },
+      {
+        "aid": 22,
+        "iid": 11,
+        "uuid": "000000B3-0000-1000-8000-0026BB765291",
+        "type": "CurrentHumidifierDehumidifierState",
+        "serviceType": "HumidifierDehumidifier",
+        "serviceName": "Humidifier",
+        "description": "Current Humidifier-Dehumidifier State",
+        "value": 0,
+        "format": "uint8",
+        "perms": ["ev", "pr"],
+        "maxValue": 3,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [0, 1, 2, 3],
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      },
+      {
+        "aid": 22,
+        "iid": 12,
+        "uuid": "000000B4-0000-1000-8000-0026BB765291",
+        "type": "TargetHumidifierDehumidifierState",
+        "serviceType": "HumidifierDehumidifier",
+        "serviceName": "Humidifier",
+        "description": "Target Humidifier-Dehumidifier State",
+        "value": 1,
+        "format": "uint8",
+        "perms": ["ev", "pr", "pw"],
+        "maxValue": 2,
+        "minValue": 0,
+        "minStep": 1,
+        "validValues": [1],
+        "canRead": true,
+        "canWrite": true,
+        "ev": true
+      },
+      {
+        "aid": 22,
+        "iid": 13,
+        "uuid": "00000010-0000-1000-8000-0026BB765291",
+        "type": "CurrentRelativeHumidity",
+        "serviceType": "HumidifierDehumidifier",
+        "serviceName": "Humidifier",
+        "description": "Current Relative Humidity",
+        "value": 50,
+        "format": "float",
+        "perms": ["ev", "pr"],
+        "unit": "percentage",
+        "maxValue": 100,
+        "minValue": 0,
+        "minStep": 1,
+        "canRead": true,
+        "canWrite": false,
+        "ev": true
+      },
+      {
+        "aid": 22,
+        "iid": 14,
+        "uuid": "000000CA-0000-1000-8000-0026BB765291",
+        "type": "RelativeHumidityHumidifierThreshold",
+        "serviceType": "HumidifierDehumidifier",
+        "serviceName": "Humidifier",
+        "description": "Relative Humidity Humidifier Threshold",
+        "value": 50,
+        "format": "float",
+        "perms": ["ev", "pr", "pw"],
+        "unit": "percentage",
+        "maxValue": 100,
+        "minValue": 0,
+        "minStep": 1,
+        "canRead": true,
+        "canWrite": true,
+        "ev": true
+      }
+    ],
+    "accessoryInformation": {
+      "Manufacturer": "Homebridge Dummy",
+      "Model": "HumidifierDehumidifier",
+      "Name": "Humidifier",
+      "Serial Number": "humidifier",
+      "Firmware Revision": "2.1.3",
+      "Configured Name": "Humidifier"
+    },
+    "values": {
+      "Active": 0,
+      "CurrentHumidifierDehumidifierState": 0,
+      "TargetHumidifierDehumidifierState": 1,
+      "CurrentRelativeHumidity": 50,
+      "RelativeHumidityHumidifierThreshold": 50
+    },
+    "instance": {
+      "name": "homebridge",
+      "username": "0E:00:00:00:00:01",
+      "ipAddress": "192.0.2.10",
+      "port": 51826,
+      "services": [],
+      "connectionFailedCount": 0,
+      "configurationNumber": "3",
+      "pinRefusalLogged": false
+    },
+    "uniqueId": "7081ec839588c07fce0a6e248e5060167464cb723dfe941f0548ca7afeffd436",
+    "nameBasedUniqueId": "c04bf94d619abeb5bdcd397a498eed9fe4df785727d44a1f1bbc0a9a23c8ee8b"
+  }
+]

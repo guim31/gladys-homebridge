@@ -1,61 +1,184 @@
-# Demo Devices Template
+# Homebridge bridge
 
-This is the user documentation of the integration. Gladys re-hosts this file
-and shows a permanent **Documentation** link to it in the Configuration screen
-(in the user's language, with English as the fallback) — it is when
-configuring that the user needs it most. Keep the short onboarding hints in
-the `section` blocks of the manifest `config_schema`; put the long
-step-by-step (screenshots, troubleshooting…) here.
+This integration connects Gladys to **your Homebridge** and offers the
+accessories of all its plugins in the Gladys **Discovery** tab: lights, switches
+and plugs, thermostats and air conditioners, blinds and windows, fans, valves,
+sensors and detectors, locks and garage doors. Once a device is added, its
+values follow Homebridge **live**, and Gladys controls it **through
+Homebridge**, which keeps its plugins (Hue, Tuya, Shelly, Ring, cloud
+devices…). Everything stays on your local network. Unofficial, not affiliated
+with the Homebridge project nor with Apple.
 
-## What you get
+The Gladys core already has a HomeKit integration that works the other way
+round (Gladys devices in the Apple Home app). This one brings Homebridge
+accessories **into** Gladys.
 
-Six demo devices show up after installation: a weather station (real data
-from Open-Meteo), a switch, a dimmable light, a smart plug with power
-metering, a motion sensor and a camera.
+> Developed against Homebridge 2.4.0 and Homebridge UI 5.29.0 in Docker, with
+> the virtual accessories of homebridge-dummy, not with real hardware: feedback
+> is welcome on the GitHub repository.
+
+## Requirements
+
+- Homebridge with its web interface (**Homebridge UI**, homebridge-config-ui-x
+  5.x), reachable from the Gladys machine (same network, or a VPN).
+- Homebridge running in **insecure mode**: in the Homebridge UI, **Settings →
+  Homebridge Settings → Homebridge Insecure Mode** (on by default with
+  hb-service), then restart Homebridge. It is what the Accessories page of the
+  UI needs too: the UI reads and controls the accessories through the HomeKit
+  protocol of your own bridges, with their PIN. Any program on your network
+  that knows the PIN can then do the same, without a HomeKit pairing.
+- A **user of the Homebridge UI** for Gladys, without two-factor
+  authentication (a one-time code cannot be typed again by a container). It
+  does not need to be an administrator: create a dedicated user in **User
+  Accounts**.
 
 ## Configuration
 
-1. Open the **Configuration** tab of the integration.
-2. Set the **latitude** and **longitude** the demo weather station should
-   observe (they default to Paris), and pick your temperature unit.
-   The **refresh interval** sets how often the weather station and the
-   plug's power are read: every 5 minutes by default, every minute at most.
-3. Save: the devices appear in the **Discovery** tab, ready to be added.
+### Address and user
 
-The **Prefer the local connection** toggle drives the demo plug: it reports
-the channel it actually uses as a badge (local or cloud), with an orange dot
-when it runs degraded (local refused, cloud fallback).
+1. In the Homebridge UI, **User Accounts → Add**: a user `gladys`, a strong
+   password, not an administrator.
+2. In Gladys, open the integration, **Configuration**:
+   - **Address of the Homebridge UI**: like `http://192.168.1.40:8581`. Not a
+     `.local` name, not `localhost`: the integration runs in its own container.
+   - **User name** and **password** of that user. Leave them empty if your UI
+     runs without login (authentication disabled).
+3. Click **Test the connection**: the Homebridge version, the number of
+   devices offered and the services not imported show up.
+4. Open the **Discovery** tab and add the devices you want. Their values are
+   sent as soon as they are added.
 
-## Actions
+### Choosing what to import
 
-- **Test the weather provider** — performs a live request to Open-Meteo and
-  shows the current temperature and humidity under the button.
-- **Identify a device** — pick one of your devices in the list and it will
-  signal itself (the demo light "blinks" in the logs).
+Gladys offers one device per Homebridge accessory, with the features of all its
+services (a sensor with temperature, humidity and battery is one device).
 
-## Scenes
+- **Only these accessories**: names separated by commas, `*` matches any text
+  (`Living*, Garage`). Empty: every accessory.
+- **Accessories to leave out**: never imported (`* battery, Test*`).
 
-The integration adds its own cards to the scene editor (Gladys 5.1 or
-later), under the **Integrations** category:
+A name matches the accessory name or one of its service names, whatever the
+case. Only the devices added in Gladys receive values: the others cost nothing.
 
-- **Motion detected** (trigger) — starts the scene when a demo motion sensor
-  sees something move. Optionally pick the sensor and what moved (person,
-  animal); left empty, any detection matches. The following actions can
-  read what moved with `{{triggerEvent.data.target}}`.
-- **Identify a device** (action) — makes the chosen device signal itself.
-  It returns whether the device could signal itself, so the following
-  actions can depend on it.
+### Locks, garage doors and alarms
 
-## Dashboard
+By default, **locks**, **garage doors**, **motorised doors** and **alarms
+(security systems)** are **read-only** in Gladys: you see whether they are
+locked, open or closed, but Gladys cannot open, unlock or disarm them, neither
+from a device, nor from a scene, nor from a voice assistant connected to
+Gladys. Each family has its own switch in the configuration: **Allow commands
+of locks**, **Allow commands of garage and motorised doors**, **Allow arming
+and disarming the alarms**. Turn on only what you need, knowing that a mistake
+in a scene could then open your house.
 
-Add the **Demo status** widget to a dashboard: it shows the live
-temperature of the weather station and the power of the office plug, the
-connection the plug currently uses (orange when degraded) and the observed
-location. Its **Identify the light** button makes the demo light signal
-itself.
+### Options
+
+- **Minimum interval between two values of a sensor**: a sensor that reports
+  every second is sent at this pace (10 seconds by default). Switches, lights,
+  covers and detectors are never delayed.
+- **Language of the feature names**: the suffixes of the secondary features
+  ("Brightness", "Battery"…). Accessory names are kept as in Homebridge.
+
+## What you get
+
+### Devices
+
+| Homebridge (HAP) service                               | In Gladys                                                              |
+| ------------------------------------------------------ | ---------------------------------------------------------------------- |
+| Lightbulb                                              | light: on/off, brightness, colour, colour temperature (what it offers) |
+| Switch, Outlet                                         | switch on/off                                                          |
+| Fan, Fanv2, AirPurifier, HumidifierDehumidifier        | switch on/off, fan speed (%)                                           |
+| Valve, Faucet, IrrigationSystem, Television            | switch on/off                                                          |
+| Thermostat                                             | set point, mode (off, heat, cool, auto), current temperature           |
+| HeaterCooler                                           | air conditioner: on/off, mode, set point of the current mode           |
+| WindowCovering, Window                                 | shutter: open, close (stop if the accessory can), position             |
+| Door                                                   | position and open or closed; commands only when allowed                |
+| LockMechanism                                          | lock: locked or unlocked; commands only when allowed                   |
+| GarageDoorOpener                                       | open or closed; open/close only when allowed                           |
+| Temperature, humidity, light, CO2, PM2.5, PM10 sensors | sensors with their unit                                                |
+| Motion, occupancy, contact, leak, smoke, CO detectors  | binary sensors (a contact is 0 when open, as everywhere in Gladys)     |
+| Battery, low battery, tampering                        | battery level, low battery and tamper alerts                           |
+
+Other services (cameras, speakers, TV inputs…) are listed by the connection
+test as "not imported". The scene action below still reaches their
+characteristics.
+
+### Dashboard widget
+
+The **Homebridge** widget shows the connection, how values arrive ("Live" via
+the socket of the UI, or "Polling"), the Homebridge version, the devices
+offered and added, the services followed, and a **Reload** button that reads
+the accessory list again.
+
+### Scene triggers
+
+- **Homebridge button pressed**: a programmable switch (StatelessProgrammableSwitch)
+  or a doorbell was pressed. Filters: accessory, press (single, double, long).
+  Variables: accessory, button, press. Needs the live updates: a press is an
+  event, polling cannot see it.
+- **Homebridge alarm changed**: a security system was armed (home, away,
+  night), disarmed or triggered. Filters: alarm, new state. Variables:
+  accessory, state, previous state.
+
+### Scene actions
+
+- **Arm or disarm a Homebridge alarm**: home, away, night or disarm. Needs
+  **Allow arming and disarming the alarms**. The name is only needed when there
+  are several security systems.
+- **Set a Homebridge characteristic**: any writable characteristic of any
+  accessory, even one not added to Gladys: the input of a TV
+  (`ActiveIdentifier`), the swing of a fan (`SwingMode`), a switch (`On`,
+  `true`). The names are those of the HomeKit protocol, as the Homebridge UI
+  shows them in the accessory details. The security switches apply here too.
+
+## Scene examples
+
+- When the doorbell button is pressed (trigger), take a camera snapshot and
+  send it to your phone.
+- When the Homebridge alarm becomes "triggered", turn on every light and send
+  a message.
+- At 7 a.m. on weekdays, set the living room TV input to 3 with "Set a
+  Homebridge characteristic", and the thermostat set point to 20 °C.
 
 ## Troubleshooting
 
-The integration logs everything it does: check the integration logs from the
-Gladys UI (or `docker logs` on the host) with `LOG_LEVEL=debug` for the full
-detail.
+- **"Homebridge does not run in insecure mode"**: enable **Homebridge Insecure
+  Mode** in the Homebridge settings and restart Homebridge. A new attempt is
+  made every minute.
+- **"Homebridge refused the login"**: check the user name and password; a user
+  with two-factor authentication cannot be used. After 10 failures in 5
+  minutes the UI locks the account out for 5 minutes: the integration only
+  tries again every 5 minutes.
+- **"Homebridge is unreachable"**: check the address from the Gladys machine
+  (`curl http://<address>:8581/api/auth/settings`). A new attempt is made after
+  5 seconds, then up to every minute.
+- **The widget says "Polling"**: the socket of the UI (`/socket.io`) does not
+  get through, often because of a reverse proxy without WebSocket support.
+  Values still arrive every 30 seconds, button presses do not.
+- **An accessory is missing**: run the connection test, it lists the services
+  not imported. Check the names to include and to leave out, and that the
+  accessory shows in the Accessories page of the Homebridge UI.
+- **Logs**: set `LOG_LEVEL=debug` to see every value received.
+
+## Limits
+
+- Developed without real hardware, against homebridge-dummy: feedback welcome.
+- Matter accessories of Homebridge 2 are not imported (the REST API of the UI
+  lists HomeKit accessories only).
+- Reading the list asks every accessory for its values: without the socket, it
+  happens every 30 seconds, which some cloud plugins may not like.
+- Resetting the Homebridge accessory cache (or changing a bridge user name)
+  gives new identifiers: the devices must be added again. Renaming an
+  accessory does not.
+- The names of features are fixed when the device is added in Gladys.
+- The security switches know locks, garage doors, motorised doors and alarms by
+  their HomeKit type: a gate or a strike that a plugin exposes as a plain
+  switch is an ordinary switch. Leave it out (**Accessories to leave out**
+  hides it from the Discovery tab; the scene action can still reach it by
+  name).
+
+## Privacy
+
+The bridge talks only to your Homebridge UI, on your network. The password is
+stored by Gladys in its configuration and never written to the logs; the
+session token lives in memory only. Nothing is sent to the internet.
