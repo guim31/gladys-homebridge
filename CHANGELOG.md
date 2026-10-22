@@ -10,6 +10,8 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-10-22
+
 ### Added
 
 - Homebridge bridge: the accessories of every Homebridge plugin offered in the
@@ -35,3 +37,6 @@ the notes of the version's GitHub Release.
   characteristic", a dashboard widget, and a connection test listing the
   services not imported.
 - English, French, German and Spanish.
+
+[Unreleased]: https://github.com/guim31/gladys-homebridge/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/guim31/gladys-homebridge/releases/tag/v1.0.0
