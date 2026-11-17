@@ -8,8 +8,8 @@
     "de": "Brücke zu Homebridge: Zubehör (Steckdosen, Lampen, Sensoren, Rollos…) in Gladys, steuerbar.",
     "es": "Puente a Homebridge: sus accesorios (enchufes, luces, sensores, persianas…) en Gladys, controlables."
   },
-  "version": "1.0.0",
-  "docker_image": "ghcr.io/guim31/gladys-homebridge:1.0.0",
+  "version": "1.0.1",
+  "docker_image": "ghcr.io/guim31/gladys-homebridge:1.0.1",
   "gladys_version": ">=5.1.0",
   "cover_image": "https://raw.githubusercontent.com/guim31/gladys-homebridge/main/cover.png",
   "categories": ["protocols", "lighting", "climate"],

@@ -1,6 +1,6 @@
 {
   "name": "gladys-homebridge",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Gladys Assistant external integration bridging Homebridge: import the accessories of every Homebridge plugin into Gladys and control them through the Homebridge UI.",
   "type": "module",
